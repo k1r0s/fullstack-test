@@ -1,5 +1,5 @@
 # Overview
-We would like you to write a mobile­based web app without any backend. Below is the user story, followed by the design.
+We would like you to write a mobile­based web app with a php backend. Below is the user story, followed by the design.
 
 # Acceptance Criteria
 
@@ -19,11 +19,15 @@ even if the user returns to the home page.
 the profile page.
 
 ## Other:
-- Libraries are ok, but please don't use any frameworks (angular, ember, react)
-- Please don't use any automatic code generation
+- Libraries are ok, but please don't use any frontend frameworks (angular, ember, react).
+- Please don't use any automatic code generation.
 - Closing the app window should close the session.
 - Remember this is a mobile­based web­app, so we would like to be compatible with major
 browsers (Safari, Chrome, Firefox, Opera).
+- The backend API should be done in PHP, you can use a library or framework for the API routing but not for anything else.
+- There is no definition for the API just that it has to be RESTful.
+- For the DB you can implement an in-memory storage (for example saving the data into an array) but it has to be prepared to change to other DB systems.
+- Object oriented design will be evaluated.
 - Please provide a short summary detailing anything you think is relevant, for _example_:
   - Installation steps
   - How to run your code / tests
