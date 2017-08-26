@@ -25,10 +25,20 @@ module.exports = Chat = Class.inherits(Profile, {
       toId: this.props.selectedProfile.id
     });
   }],
-  "click textbox-container>a": ["$valueof: 'textbox-container>input'", function(inputValue){
+  "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
     console.log(inputValue);
   }],
   messagesHandler: ["$GET: 'messages'", function(request, responseData){
     this.set("messages", responseData);
+
+    setTimeout(function(){
+      this.props.messages.push({
+        "fromId": 4,
+        "toId": 3,
+        "content": "Prueba de mierda, si, esto es pruebasldhldfhas lasdhflds hfajdhflakjdshjashdf dfdsaf adf!",
+        "timestamp": Date.now()
+      })
+      this.set("messages", this.props.messages);
+    }.bind(this), 2000);
   }]
 })

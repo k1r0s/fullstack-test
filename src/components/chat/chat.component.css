@@ -2,25 +2,72 @@ x-chat .chat-container {
     background: #e4e4e4;
 }
 
-x-chat {
+x-chat .message-item {
+    margin: 10px 70px;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+    position: relative;
+}
 
+x-chat .message-item span::after {
+  content: "\25BC";
+  font-size: 70px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  line-height: .48;
+}
+
+x-chat .textbox-container a.send{
+  position: fixed;
+  color: green;
+  font-size: 40px;
+  bottom: 0;
+  right: 0;
+  padding: 1vh 5vh;
+}
+
+x-chat .textbox-container a.send::after {
+  content: "\27A4";
+}
+
+x-chat .message-item.from-selection {
+    background: lightblue;
+}
+
+x-chat .message-item.from-selection span::after {
+    color: lightblue;
+    margin-left: 195px;
+}
+
+x-chat .message-item.from-session {
+    background: lightgrey;
+}
+
+x-chat .message-item.from-session span::after {
+    color: lightgrey;
+    margin-left: -30px;
 }
 
 x-chat .chat-container {
-    position: relative;
     background: #e4e4e4;
-    overflow:auto;
+    min-height: 91vh;
+    position: relative;
+    overflow: auto;
+    padding-bottom: 10vh;
 }
 
 x-chat .session-profile {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    bottom: 50px;
+    left: 15px;
 }
 
 x-chat .selection-profile {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: fixed;
+    top: 70px;
+    right: 15px;
 }
 
 x-chat .textbox-container {

@@ -11,9 +11,10 @@ this.props.getChatClass = function(message){
   <div class="profile-min selection-profile">
     <img src="<?= this.props.selectedProfile.profileImg ?>">
   </div>
-  <span class="selection-profile"></span>
   <? this.props.messages.forEach(function(message){ ?>
     <div class="message-item <?= this.props.getChatClass(message) ?>">
+
+      <span></span>
       <?= message.content ?>
     </div>
   <? }, this) ?>

@@ -16302,7 +16302,7 @@ Advices.add(
     next();
   },
   function $valueof(selector) {
-    meta.args.push(meta.scope.q(selector).value);
+    meta.args.unshift(meta.scope.q(selector).value);
   },
   function $registerDomListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
@@ -16528,10 +16528,10 @@ module.exports = App = Class.inherits(Component, {
 })
 
 },{"../../common/component":48,"../../services/storage":68,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
-module.exports = "x-chat .chat-container {\n    background: #e4e4e4;\n}\n\nx-chat {\n\n}\n\nx-chat .chat-container {\n    position: relative;\n    background: #e4e4e4;\n    overflow:auto;\n}\n\nx-chat .session-profile {\n    position: absolute;\n    bottom: 0;\n}\n\nx-chat .selection-profile {\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n\nx-chat .textbox-container {\n    height: 30px;\n    position: fixed;\n    bottom:0%;\n    width:85%;\n    margin: 15px;\n\n}\n\nx-chat .textbox-container input {\n    width:100%;\n    background: #f1eeee;\n    padding: 10px;\n    border-radius: 5%;\n    border: none;\n}\n";
+module.exports = "x-chat .chat-container {\n    background: #e4e4e4;\n}\n\nx-chat .message-item {\n    margin: 10px 70px;\n    padding: 15px;\n    border-radius: 10px;\n    font-size: 20px;\n    position: relative;\n}\n\nx-chat .message-item span::after {\n  content: \"\\25BC\";\n  font-size: 70px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  line-height: .48;\n}\n\nx-chat .textbox-container a.send{\n  position: fixed;\n  color: green;\n  font-size: 40px;\n  bottom: 0;\n  right: 0;\n  padding: 1vh 5vh;\n}\n\nx-chat .textbox-container a.send::after {\n  content: \"\\27A4\";\n}\n\nx-chat .message-item.from-selection {\n    background: lightblue;\n}\n\nx-chat .message-item.from-selection span::after {\n    color: lightblue;\n    margin-left: 195px;\n}\n\nx-chat .message-item.from-session {\n    background: lightgrey;\n}\n\nx-chat .message-item.from-session span::after {\n    color: lightgrey;\n    margin-left: -30px;\n}\n\nx-chat .chat-container {\n    background: #e4e4e4;\n    min-height: 91vh;\n    position: relative;\n    overflow: auto;\n    padding-bottom: 10vh;\n}\n\nx-chat .session-profile {\n    position: fixed;\n    bottom: 50px;\n    left: 15px;\n}\n\nx-chat .selection-profile {\n    position: fixed;\n    top: 70px;\n    right: 15px;\n}\n\nx-chat .textbox-container {\n    height: 30px;\n    position: fixed;\n    bottom:0%;\n    width:85%;\n    margin: 15px;\n\n}\n\nx-chat .textbox-container input {\n    width:100%;\n    background: #f1eeee;\n    padding: 10px;\n    border-radius: 5%;\n    border: none;\n}\n";
 
 },{}],55:[function(require,module,exports){
-module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n  </div>\n  <span class=\"selection-profile\"></span>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
+module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n  </div>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n\n      <span></span>\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
 
 },{}],56:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -16541,9 +16541,11 @@ var storage = require("../../services/storage");
 module.exports = Chat = Class.inherits(Profile, {
   selector: "x-chat",
   template: require('./chat.component.ejs'),
+  css: require('./chat.component.css'),
   constructor: ["override", function(parent, props){
     props.messages = [];
     parent(props);
+    // kaop bug >.<!
     this.css = require('./chat.component.css');
   }],
   isRenderAllowed: ["override", function(parent){
@@ -16559,11 +16561,21 @@ module.exports = Chat = Class.inherits(Profile, {
       toId: this.props.selectedProfile.id
     });
   }],
-  "click textbox-container>a": ["$valueof: 'textbox-container>input'", function(inputValue){
+  "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
     console.log(inputValue);
   }],
   messagesHandler: ["$GET: 'messages'", function(request, responseData){
     this.set("messages", responseData);
+
+    setTimeout(function(){
+      this.props.messages.push({
+        "fromId": 4,
+        "toId": 3,
+        "content": "Prueba de mierda, si, esto es pruebasldhldfhas lasdhflds hfajdhflakjdshjashdf dfdsaf adf!",
+        "timestamp": Date.now()
+      })
+      this.set("messages", this.props.messages);
+    }.bind(this), 2000);
   }]
 })
 
@@ -16700,7 +16712,7 @@ document.body.querySelector("#app").innerHTML = app.root();
 var axios = require("axios");
 
 module.exports = instance = axios.create({
-  baseURL: 'http://localhost:3000/',
+  baseURL: 'http://localhost:8080/',
   timeout: 1000
 });
 

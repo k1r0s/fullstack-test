@@ -63,7 +63,7 @@ Advices.add(
     next();
   },
   function $valueof(selector) {
-    meta.args.push(meta.scope.q(selector).value);
+    meta.args.unshift(meta.scope.q(selector).value);
   },
   function $registerDomListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
