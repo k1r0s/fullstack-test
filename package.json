@@ -1,0 +1,28 @@
+{
+  "name": "cmp-full-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./public/app.dev.js",
+    "serve:dev": "json-server --watch dev/db.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "ejs": "^2.5.7",
+    "kaop": "^2.7.10",
+    "path-parser": "^2.0.2",
+    "rx": "^4.1.0",
+    "uuid": "^3.1.0",
+    "wolfy87-eventemitter": "^5.2.2"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0",
+    "json-server": "^0.12.0",
+    "stringify": "^5.1.0"
+  }
+}
