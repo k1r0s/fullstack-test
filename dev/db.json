@@ -1,4 +1,13 @@
 {
+  "session": {
+    "id": 3,
+    "name": "Ciro Ivan",
+    "email": "ciro.asd@zz.net",
+    "pass": "1234",
+    "city": "Alcoi",
+    "dob": 656550000000,
+    "profileImg": "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460"
+  },
   "profiles": [
     {
       "id": 1,
@@ -43,6 +52,15 @@
       "city": "Milan",
       "dob": 601022840100,
       "profileImg": "img/231123221.jpg"
+    }
+  ],
+  "messages": [
+    {
+      "id": 4313,
+      "fromId": 3,
+      "toId": 4,
+      "content": "kdjñfjñkj klj kljñaflkj ñlkj aldkjf lkajdñ lfkjañlkjdlkfj ñakldjf lkj lkj fkadj",
+      "timestamp": 1503771567004
     }
   ]
 }

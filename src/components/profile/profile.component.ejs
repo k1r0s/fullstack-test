@@ -25,7 +25,9 @@ var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non si
 <? } else { ?>
   <div class="profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>">
     <div class="profile-image">
-      <span class="profile-status <?= this.props.getStatus() ?>"><?= this.props.getStatus().toUpperCase() ?></span>
+      <? if(this.props.routeName !== "Me") { ?>
+        <span class="profile-status <?= this.props.getStatus() ?>"><?= this.props.getStatus().toUpperCase() ?></span>
+      <? } ?>
       <img src="<?= this.props.selectedProfile.profileImg ?>">
     </div>
 

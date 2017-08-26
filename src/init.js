@@ -9,13 +9,3 @@ var storage = require("./services/storage");
 var app = new App();
 
 document.body.querySelector("#app").innerHTML = app.root();
-
-storage.write("session", {
-  "name": "Ciro Ivan",
-  "email": "ciro.asd@zz.net",
-  "online": true,
-  "pass": "1234",
-  "city": "Alcoi",
-  "dob": 656550000000,
-  "profileImg": "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460"
-});

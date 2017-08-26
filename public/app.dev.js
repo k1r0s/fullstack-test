@@ -16508,10 +16508,17 @@ module.exports = App = Class.inherits(Component, {
   constructor: ["override", function(parent, props) {
     parent(props);
   }],
-  afterMount: ["$GET: 'profiles'", function(profiles){
+  afterMount: function(profiles){
+    this.sessionHandler();
+  },
+  profilesHandler: ["$GET: 'profiles'", function(profiles){
     storage.write("profiles", profiles);
     return profiles;
-  }, "$emit: 'update-profiles'"]
+  }, "$emit: 'update-profiles'"],
+  sessionHandler: ["$GET: 'session'", function(session){
+    storage.write("session", session);
+    this.profilesHandler();
+  }, "$emit: 'update-session'"],
 })
 
 },{"../../common/component":48,"../../services/storage":67,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
@@ -16596,7 +16603,7 @@ module.exports = Nav = Class.inherits(Component, {
 module.exports = "x-profile .profile-content {\n    padding: 20px;\n}\n\nx-profile .profile-content.isFriend {\n    background: #e3baea;\n}\n\nx-profile .profile-content .profile-image {\n    height: 220px;\n    position: relative;\n}\n\nx-profile .profile-content .profile-image img {\n    margin: auto;\n    width: 200px;\n    border-radius: 100%;\n}\n\nx-profile .profile-content .profile-image {\n    display: flex;\n}\n\nx-profile .profile-content .profile-image .profile-status {\n    position: absolute;\n    right: 30px;\n    color: white;\n    font-weight: bold;\n    font-size: 18px;\n    width: 80px;\n    height: 80px;\n    border-radius: 100%;\n    text-align: center;\n    line-height: 4em;\n}\n\nx-profile span.online {\n    background: rgb(112, 214, 112);\n}\n\nx-profile span.offline {\n    background: rgb(255, 109, 109);\n}\n\nx-profile .profile-content .profile-summary .name-age {\n    font-size: 22px;\n}\n\nx-profile .profile-content .profile-summary .city {\n    color: #ff4c67;\n}\n\nx-profile .profile-content .profile-actions {\n  display: inline-grid;\n  width: 100%;\n}\n\nx-profile .profile-content .profile-actions a {\n    bottom: 0;\n    display: grid;\n    background: #3a3a3a;\n    text-align: center;\n    padding: 10px;\n    color: white;\n    vertical-align: middle;\n    font-weight: bold;\n}\n\nx-profile .profile-content.isFriend .profile-actions a {\n  background: red;\n}\n";
 
 },{}],63:[function(require,module,exports){
-module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  // idc about months haha\n  var today = new Date();\n  var birth = new Date(timestamp);\n  return today.getFullYear() - birth.getFullYear();\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nthis.props.getStatus = function() {\n  return this.selectedProfile.online ? \"online\": \"offline\";\n}\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n<? if (!this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <span>profile not found</span>\n  </div>\n<? } else { ?>\n  <div class=\"profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>\">\n    <div class=\"profile-image\">\n      <span class=\"profile-status <?= this.props.getStatus() ?>\"><?= this.props.getStatus().toUpperCase() ?></span>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <div>\n        <span class=\"name-age\">\n          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n        </span>\n      </div>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n    <? if (this.props.routeName !== \"Me\") { ?>\n      <div class=\"profile-actions\">\n        <a class=\"add-friend\"><?= this.props.selectedProfile.friend ? 'Remove friend' : 'Add as friend'?></a>\n      </div>\n    <? } ?>\n  </div>\n<? } ?>\n";
+module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  // idc about months haha\n  var today = new Date();\n  var birth = new Date(timestamp);\n  return today.getFullYear() - birth.getFullYear();\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nthis.props.getStatus = function() {\n  return this.selectedProfile.online ? \"online\": \"offline\";\n}\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n<? if (!this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <span>profile not found</span>\n  </div>\n<? } else { ?>\n  <div class=\"profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>\">\n    <div class=\"profile-image\">\n      <? if(this.props.routeName !== \"Me\") { ?>\n        <span class=\"profile-status <?= this.props.getStatus() ?>\"><?= this.props.getStatus().toUpperCase() ?></span>\n      <? } ?>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <div>\n        <span class=\"name-age\">\n          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n        </span>\n      </div>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n    <? if (this.props.routeName !== \"Me\") { ?>\n      <div class=\"profile-actions\">\n        <a class=\"add-friend\"><?= this.props.selectedProfile.friend ? 'Remove friend' : 'Add as friend'?></a>\n      </div>\n    <? } ?>\n  </div>\n<? } ?>\n";
 
 },{}],64:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -16655,16 +16662,6 @@ var storage = require("./services/storage");
 var app = new App();
 
 document.body.querySelector("#app").innerHTML = app.root();
-
-storage.write("session", {
-  "name": "Ciro Ivan",
-  "email": "ciro.asd@zz.net",
-  "online": true,
-  "pass": "1234",
-  "city": "Alcoi",
-  "dob": 656550000000,
-  "profileImg": "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460"
-});
 
 },{"./common/advices":47,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":61,"./components/profile/profile.component":64,"./services/storage":67}],66:[function(require,module,exports){
 var axios = require("axios");
