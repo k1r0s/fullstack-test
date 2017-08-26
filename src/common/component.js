@@ -12,8 +12,9 @@ module.exports = Component = Class.inherits(HTMLElement, {
   constructor: [function(props) {
     this.props = props;
   }, "$setupListeners"],
-  set: function(key, val) {
+  set: function(key, val, silent) {
     this.props[key] = val;
+    if(silent) {return;}
     this.invalidate(this.template);
   },
   root: function() {

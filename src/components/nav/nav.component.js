@@ -6,9 +6,10 @@ module.exports = Nav = Class.inherits(Component, {
   template: require('./nav.component.ejs'),
   props: { profile: null },
   constructor: ["override", function(parent){
-    parent(this.props)
+    parent(this.props);
   }],
-  "listen profile-mode": function(){
+  "listen profile-mode": function(profile){
+    this.set("title", profile.props.routeName, true);
     this.set("profile", true);
   },
   "listen list-mode": function(){
