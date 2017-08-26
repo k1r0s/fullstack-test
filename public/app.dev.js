@@ -16813,7 +16813,7 @@ Advices.add(
   }
 )
 
-},{"../services/request":64,"ejs":27,"kaop/Advices":31,"rx":42,"wolfy87-eventemitter":47}],49:[function(require,module,exports){
+},{"../services/request":66,"ejs":27,"kaop/Advices":31,"rx":42,"wolfy87-eventemitter":47}],49:[function(require,module,exports){
 var Class = require("kaop/Class");
 var uuid = require("uuid/v1");
 
@@ -16828,8 +16828,9 @@ module.exports = Component = Class.inherits(HTMLElement, {
   constructor: [function(props) {
     this.props = props;
   }, "$setupListeners"],
-  set: function(key, val) {
+  set: function(key, val, silent) {
     this.props[key] = val;
+    if(silent) {return;}
     this.invalidate(this.template);
   },
   root: function() {
@@ -16963,7 +16964,7 @@ module.exports = App = Class.inherits(Component, {
   }, "$emit: 'update-profiles'"]
 })
 
-},{"../../common/component":49,"../../services/storage":65,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
+},{"../../common/component":49,"../../services/storage":67,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
 module.exports = "chat component\n";
 
 },{}],55:[function(require,module,exports){
@@ -17003,20 +17004,25 @@ module.exports = Home = Class.inherits(Component, {
 */
 
 },{"../../common/component":49,"./home.component.css":56,"./home.component.ejs":57,"kaop/Class":32}],59:[function(require,module,exports){
-module.exports = "<? if(this.props.profile) { ?>\n  <a>Back</a>\n<? } else { ?>\n  <ul>\n    <li>\n      <a href=\"#/\">Home</a>\n      <a href=\"#/profile/me\">Profile</a>\n    </li>\n  </ul>\n<? } ?>\n";
+module.exports = "x-nav .profile-menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\nx-nav .profile-menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\nx-nav .profile-menu * {\n  color: white;\n  font-weight: bold;\n}\n\nx-nav .profile-menu span {\n    margin: auto;\n}\n\n.right-arrow:after {\n}\n";
 
 },{}],60:[function(require,module,exports){
+module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"profile-menu\">\n    <a class=\"a-left\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <ul>\n    <li>\n      <a href=\"#/\">Home</a>\n      <a href=\"#/profile/me\">Profile</a>\n    </li>\n  </ul>\n<? } ?>\n";
+
+},{}],61:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 
 module.exports = Nav = Class.inherits(Component, {
   selector: "x-nav",
   template: require('./nav.component.ejs'),
+  css: require('./nav.component.css'),
   props: { profile: null },
   constructor: ["override", function(parent){
-    parent(this.props)
+    parent(this.props);
   }],
-  "listen profile-mode": function(){
+  "listen profile-mode": function(profile){
+    this.set("title", profile.props.routeName, true);
     this.set("profile", true);
   },
   "listen list-mode": function(){
@@ -17024,10 +17030,13 @@ module.exports = Nav = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":49,"./nav.component.ejs":59,"kaop/Class":32}],61:[function(require,module,exports){
-module.exports = "<? if (this.props.selectedProfile) { ?>\n  <span><?= this.props.selectedProfile.name ?></span>\n<? } else { ?>\n  <span>profile not found</span>\n<? } ?>\n";
+},{"../../common/component":49,"./nav.component.css":59,"./nav.component.ejs":60,"kaop/Class":32}],62:[function(require,module,exports){
+module.exports = "";
 
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
+module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  return new Date()\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n\n<? if (this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <div class=\"profile-image\">\n      <span class=\"profile-status\"><?= this.props.selectedProfile.online ? \"online\": \"offline\"?></span>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <h4>\n        <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n        <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n      </h4>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n  </div>\n\n<? } else { ?>\n  <span>profile not found</span>\n<? } ?>\n";
+
+},{}],64:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -17035,6 +17044,7 @@ var storage = require("../../services/storage");
 module.exports = Profile = Class.inherits(Component, {
   selector: "x-profile",
   template: require('./profile.component.ejs'),
+  css: require('./profile.component.css'),
   props: { selectedProfile: null, routeName: null },
   constructor: ["override", function(parent, props){
     this.props.routeName = props.name;
@@ -17058,11 +17068,10 @@ module.exports = Profile = Class.inherits(Component, {
   },
   profileMatcherPredicate: function(prof){
     return prof.name === this.props.routeName;
-  },
-
+  }
 })
 
-},{"../../common/component":49,"../../services/storage":65,"./profile.component.ejs":61,"kaop/Class":32}],63:[function(require,module,exports){
+},{"../../common/component":49,"../../services/storage":67,"./profile.component.css":62,"./profile.component.ejs":63,"kaop/Class":32}],65:[function(require,module,exports){
 require("./common/advices");
 var App = require("./components/app/app.component");
 var Nav = require("./components/nav/nav.component");
@@ -17084,7 +17093,7 @@ storage.write("session", {
   "profileImg": "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460"
 });
 
-},{"./common/advices":48,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":60,"./components/profile/profile.component":62,"./services/storage":65}],64:[function(require,module,exports){
+},{"./common/advices":48,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":61,"./components/profile/profile.component":64,"./services/storage":67}],66:[function(require,module,exports){
 var axios = require("axios");
 
 module.exports = instance = axios.create({
@@ -17092,7 +17101,7 @@ module.exports = instance = axios.create({
   timeout: 1000
 });
 
-},{"axios":1}],65:[function(require,module,exports){
+},{"axios":1}],67:[function(require,module,exports){
 module.exports = {
   read: function(key) {
     return JSON.parse(sessionStorage.getItem(key));
@@ -17105,4 +17114,4 @@ module.exports = {
   }
 }
 
-},{}]},{},[63]);
+},{}]},{},[65]);

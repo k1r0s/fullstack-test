@@ -1,5 +1,34 @@
+<?
+this.props.getYearsOld = function(timestamp){
+  return new Date()
+}
+
+this.props.capitalize = function(str) {
+    return str.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+};
+
+var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut."
+
+?>
+
+
 <? if (this.props.selectedProfile) { ?>
-  <span><?= this.props.selectedProfile.name ?></span>
+  <div class="profile-content">
+    <div class="profile-image">
+      <span class="profile-status"><?= this.props.selectedProfile.online ? "online": "offline"?></span>
+      <img src="<?= this.props.selectedProfile.profileImg ?>">
+    </div>
+
+    <div class="profile-summary">
+      <h4>
+        <?= this.props.capitalize(this.props.selectedProfile.name) ?>,
+        <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>
+      </h4>
+      <span class="city"><?= this.props.selectedProfile.city ?></span>
+      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>
+    </div>
+  </div>
+
 <? } else { ?>
   <span>profile not found</span>
 <? } ?>

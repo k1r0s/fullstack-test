@@ -5,6 +5,7 @@ var storage = require("../../services/storage");
 module.exports = Profile = Class.inherits(Component, {
   selector: "x-profile",
   template: require('./profile.component.ejs'),
+  css: require('./profile.component.css'),
   props: { selectedProfile: null, routeName: null },
   constructor: ["override", function(parent, props){
     this.props.routeName = props.name;
@@ -28,6 +29,5 @@ module.exports = Profile = Class.inherits(Component, {
   },
   profileMatcherPredicate: function(prof){
     return prof.name === this.props.routeName;
-  },
-
+  }
 })
