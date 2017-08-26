@@ -6,14 +6,15 @@ module.exports = Home = Class.inherits(Component, {
   template: require('./home.component.ejs'),
   css: require('./home.component.css'),
   props: { profiles: [] },
+  constructor: ["override", function(parent) {
+    parent(this.props);
+  }],
   "listen update-profiles": function(profiles){
+    this.set("profiles", profiles);
   }
 })
 
 /*
 
-<? this.props.profiles.forEach(function(profile) { ?>
-  <a href="#/profile/<?= profile.name ?>"><?= profile.name ?></a>
-<? }) ?>
 
 */

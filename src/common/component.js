@@ -12,6 +12,10 @@ module.exports = Component = Class.inherits(HTMLElement, {
   constructor: [function(props) {
     this.props = props;
   }, "$setupListeners"],
+  navigate: function(newUrl){
+    newUrl = "#" + newUrl
+    location.hash = newUrl;
+  },
   set: function(key, val, silent) {
     this.props[key] = val;
     if(silent) {return;}
@@ -35,7 +39,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   }, "$registerDomListeners"],
   replaceContent: function(rawhtml) {
     if(this.css) {
-      rawhtml += "<style>" + this.css + "</style>";
+      rawhtml += "<style scoped>" + this.css + "</style>";
     }
 
     if(this.el) {

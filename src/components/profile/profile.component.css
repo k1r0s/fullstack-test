@@ -1,23 +1,23 @@
-x-profile .profile-content {
+.profile-content {
     padding: 20px;
 }
 
-x-profile .profile-content .profile-image {
+.profile-content .profile-image {
     height: 220px;
     position: relative;
 }
 
-x-profile .profile-content .profile-image img {
+.profile-content .profile-image img {
     margin: auto;
     width: 200px;
     border-radius: 100%;
 }
 
-x-profile .profile-content .profile-image {
+.profile-content .profile-image {
     display: flex;
 }
 
-x-profile .profile-content .profile-image .profile-status {
+.profile-content .profile-image .profile-status {
     position: absolute;
     right: 30px;
     color: white;
@@ -30,23 +30,23 @@ x-profile .profile-content .profile-image .profile-status {
     line-height: 4em;
 }
 
-x-profile span.online {
+span.online {
     background: rgb(112, 214, 112);
 }
 
-x-profile span.offline {
+span.offline {
     background: rgb(255, 109, 109);
 }
 
-x-profile .profile-content .profile-summary .name-age {
+.profile-content .profile-summary .name-age {
     font-size: 22px;
 }
 
-x-profile .profile-content .profile-summary .city {
+.profile-content .profile-summary .city {
     color: #ff4c67;
 }
 
-x-profile .profile-content .profile-actions a {
+.profile-content .profile-actions a {
     bottom: 0;
     display: grid;
     background: #3a3a3a;

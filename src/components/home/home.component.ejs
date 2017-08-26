@@ -1,4 +1,7 @@
 <div>
   <ul>
+    <? this.props.profiles.forEach(function(profile) { ?>
+      <a href="#/profile/<?= profile.name ?>"><?= profile.name ?></a>
+    <? }) ?>
   </ul>
 </div>
