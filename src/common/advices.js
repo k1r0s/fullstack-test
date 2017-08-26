@@ -30,13 +30,13 @@ Advices.add(
     })
   },
   function $GET(resource) {
-    $axiosInstance.get(resource, meta.args[0]).then(function(result){
+    $axiosInstance.get(resource, { params: meta.args[0] }).then(function(result){
       meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
-    $axiosInstance.post(resource, { params: meta.args[0] }).then(function(result){
+    $axiosInstance.post(resource, meta.args[0]).then(function(result){
       meta.args.push(result.data);
       next();
     })

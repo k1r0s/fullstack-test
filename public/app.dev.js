@@ -16269,13 +16269,13 @@ Advices.add(
     })
   },
   function $GET(resource) {
-    $axiosInstance.get(resource, meta.args[0]).then(function(result){
+    $axiosInstance.get(resource, { params: meta.args[0] }).then(function(result){
       meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
-    $axiosInstance.post(resource, { params: meta.args[0] }).then(function(result){
+    $axiosInstance.post(resource, meta.args[0]).then(function(result){
       meta.args.push(result.data);
       next();
     })
@@ -16562,20 +16562,27 @@ module.exports = Chat = Class.inherits(Profile, {
     });
   }],
   "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
-    console.log(inputValue);
+    this.addMessageHandler({
+      "fromId": 3,
+      "toId": this.props.selectedProfile.id,
+      "content": inputValue,
+      "timestamp": Date.now()
+    });
+  }],
+  addMessageHandler: ["$POST: 'messages'", function(request, responseData){
+    this.props.messages.push(responseData);
+    this.set("messages", this.props.messages);
   }],
   messagesHandler: ["$GET: 'messages'", function(request, responseData){
     this.set("messages", responseData);
 
-    setTimeout(function(){
-      this.props.messages.push({
-        "fromId": 4,
-        "toId": 3,
-        "content": "Prueba de mierda, si, esto es pruebasldhldfhas lasdhflds hfajdhflakjdshjashdf dfdsaf adf!",
-        "timestamp": Date.now()
-      })
-      this.set("messages", this.props.messages);
-    }.bind(this), 2000);
+    // fake message
+    this.addMessageHandler({
+      "fromId": this.props.selectedProfile.id,
+      "toId": 3,
+      "content": "Hi, how are you! Wana some turing test?",
+      "timestamp": Date.now()
+    });
   }]
 })
 
