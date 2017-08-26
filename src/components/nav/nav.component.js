@@ -4,6 +4,7 @@ var Component = require("../../common/component");
 module.exports = Nav = Class.inherits(Component, {
   selector: "x-nav",
   template: require('./nav.component.ejs'),
+  css: require('./nav.component.css'),
   props: { profile: null },
   constructor: ["override", function(parent){
     parent(this.props);

@@ -1,0 +1,21 @@
+x-nav .profile-menu {
+    background: #3a3a3a;
+    padding: 20px;
+    display: flex;
+}
+
+x-nav .profile-menu a.a-left:after {
+  content: "\25C0";
+}
+
+x-nav .profile-menu * {
+  color: white;
+  font-weight: bold;
+}
+
+x-nav .profile-menu span {
+    margin: auto;
+}
+
+.right-arrow:after {
+}
