@@ -17012,7 +17012,7 @@ module.exports = Home = Class.inherits(Component, {
 module.exports = ".profile-menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\n.profile-menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\n.profile-menu * {\n  color: white;\n  font-weight: bold;\n}\n\n.profile-menu span {\n    margin: auto;\n}\n";
 
 },{}],60:[function(require,module,exports){
-module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"profile-menu\">\n    <a class=\"a-left\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <ul>\n    <li>\n      <a href=\"#/\">Home</a>\n      <a href=\"#/profile/Me\">Profile</a>\n    </li>\n  </ul>\n<? } ?>\n";
+module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"profile-menu\">\n    <a class=\"a-left back\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <ul>\n    <li>\n      <a href=\"#/\">Home</a>\n      <a href=\"#/profile/Me\">Profile</a>\n    </li>\n  </ul>\n<? } ?>\n";
 
 },{}],61:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -17032,6 +17032,9 @@ module.exports = Nav = Class.inherits(Component, {
   },
   "listen list-mode": function(){
     this.set("profile", false);
+  },
+  "click a.back": function(){
+    this.navigate("/");
   }
 })
 
@@ -17057,6 +17060,9 @@ module.exports = Profile = Class.inherits(Component, {
   }],
   "listen update-profiles": function(){
     this.selectProfile();
+  },
+  "click .profile-image>img": function(){
+    this.navigate("/chat/" + this.props.routeName);
   },
   selectProfile: function(){
     if(this.props.routeName === "Me") {

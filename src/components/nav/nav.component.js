@@ -15,5 +15,8 @@ module.exports = Nav = Class.inherits(Component, {
   },
   "listen list-mode": function(){
     this.set("profile", false);
+  },
+  "click a.back": function(){
+    this.navigate("/");
   }
 })

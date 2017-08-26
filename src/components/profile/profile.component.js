@@ -14,6 +14,9 @@ module.exports = Profile = Class.inherits(Component, {
   "listen update-profiles": function(){
     this.selectProfile();
   },
+  "click .profile-image>img": function(){
+    this.navigate("/chat/" + this.props.routeName);
+  },
   selectProfile: function(){
     if(this.props.routeName === "Me") {
       this.set("selectedProfile", storage.read("session"))
