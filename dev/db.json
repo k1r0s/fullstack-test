@@ -13,7 +13,7 @@
     },
     {
       "id": 2,
-      "friend": true,
+      "friend": false,
       "name": "Joe",
       "email": "joe.asd@zz.net",
       "online": true,

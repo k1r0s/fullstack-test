@@ -5,7 +5,7 @@ module.exports = AppRouter = Class.inherits(Router, {
   selector: "x-app-router",
   props: { default: "/profile/Aby", notFound: "/" },
   constructor: ["override", function(parent){
-    parent(this.props)
+    parent(this.props);
   }],
   "route /": [function(){
     var home = new Home();

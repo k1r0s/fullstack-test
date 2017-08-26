@@ -1,7 +1,7 @@
 var Class = require("kaop/Class");
-var Component = require("../../common/component");
+var Profile = require("../profile/profile.component");
 
-module.exports = Chat = Class.inherits(Component, {
+module.exports = Chat = Class.inherits(Profile, {
   selector: "x-chat",
   template: require('./chat.component.ejs')
 })
