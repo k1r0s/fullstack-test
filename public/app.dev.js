@@ -184,7 +184,7 @@ module.exports = function xhrAdapter(config) {
 };
 
 }).call(this,require('_process'))
-},{"../core/createError":9,"./../core/settle":12,"./../helpers/btoa":16,"./../helpers/buildURL":17,"./../helpers/cookies":19,"./../helpers/isURLSameOrigin":21,"./../helpers/parseHeaders":23,"./../utils":25,"_process":43}],3:[function(require,module,exports){
+},{"../core/createError":9,"./../core/settle":12,"./../helpers/btoa":16,"./../helpers/buildURL":17,"./../helpers/cookies":19,"./../helpers/isURLSameOrigin":21,"./../helpers/parseHeaders":23,"./../utils":25,"_process":41}],3:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -737,7 +737,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this,require('_process'))
-},{"./adapters/http":2,"./adapters/xhr":2,"./helpers/normalizeHeaderName":22,"./utils":25,"_process":43}],15:[function(require,module,exports){
+},{"./adapters/http":2,"./adapters/xhr":2,"./helpers/normalizeHeaderName":22,"./utils":25,"_process":41}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -1402,105 +1402,9 @@ module.exports = {
   trim: trim
 };
 
-},{"./helpers/bind":15,"is-buffer":31}],26:[function(require,module,exports){
+},{"./helpers/bind":15,"is-buffer":30}],26:[function(require,module,exports){
 
 },{}],27:[function(require,module,exports){
-'use strict';
-var token = '%[a-f0-9]{2}';
-var singleMatcher = new RegExp(token, 'gi');
-var multiMatcher = new RegExp('(' + token + ')+', 'gi');
-
-function decodeComponents(components, split) {
-	try {
-		// Try to decode the entire string first
-		return decodeURIComponent(components.join(''));
-	} catch (err) {
-		// Do nothing
-	}
-
-	if (components.length === 1) {
-		return components;
-	}
-
-	split = split || 1;
-
-	// Split the array in 2 parts
-	var left = components.slice(0, split);
-	var right = components.slice(split);
-
-	return Array.prototype.concat.call([], decodeComponents(left), decodeComponents(right));
-}
-
-function decode(input) {
-	try {
-		return decodeURIComponent(input);
-	} catch (err) {
-		var tokens = input.match(singleMatcher);
-
-		for (var i = 1; i < tokens.length; i++) {
-			input = decodeComponents(tokens, i).join('');
-
-			tokens = input.match(singleMatcher);
-		}
-
-		return input;
-	}
-}
-
-function customDecodeURIComponent(input) {
-	// Keep track of all the replacements and prefill the map with the `BOM`
-	var replaceMap = {
-		'%FE%FF': '\uFFFD\uFFFD',
-		'%FF%FE': '\uFFFD\uFFFD'
-	};
-
-	var match = multiMatcher.exec(input);
-	while (match) {
-		try {
-			// Decode as big chunks as possible
-			replaceMap[match[0]] = decodeURIComponent(match[0]);
-		} catch (err) {
-			var result = decode(match[0]);
-
-			if (result !== match[0]) {
-				replaceMap[match[0]] = result;
-			}
-		}
-
-		match = multiMatcher.exec(input);
-	}
-
-	// Add `%C2` at the end of the map to make sure it does not replace the combinator before everything else
-	replaceMap['%C2'] = '\uFFFD';
-
-	var entries = Object.keys(replaceMap);
-
-	for (var i = 0; i < entries.length; i++) {
-		// Replace all decoded components
-		var key = entries[i];
-		input = input.replace(new RegExp(key, 'g'), replaceMap[key]);
-	}
-
-	return input;
-}
-
-module.exports = function (encodedURI) {
-	if (typeof encodedURI !== 'string') {
-		throw new TypeError('Expected `encodedURI` to be of type `string`, got `' + typeof encodedURI + '`');
-	}
-
-	try {
-		encodedURI = encodedURI.replace(/\+/g, ' ');
-
-		// Try the built in decoder first
-		return decodeURIComponent(encodedURI);
-	} catch (err) {
-		// Fallback to a more advanced decoder
-		return customDecodeURIComponent(encodedURI);
-	}
-};
-
-},{}],28:[function(require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -2368,7 +2272,7 @@ if (typeof window != 'undefined') {
   window.ejs = exports;
 }
 
-},{"../package.json":30,"./utils":29,"fs":26,"path":41}],29:[function(require,module,exports){
+},{"../package.json":29,"./utils":28,"fs":26,"path":39}],28:[function(require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -2534,7 +2438,7 @@ exports.cache = {
   }
 };
 
-},{}],30:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 module.exports={
   "_args": [
     [
@@ -2650,7 +2554,7 @@ module.exports={
   "version": "2.5.7"
 }
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -2673,13 +2577,13 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],32:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 module.exports = require("./lib/index").Advices;
 
-},{"./lib/index":34}],33:[function(require,module,exports){
+},{"./lib/index":33}],32:[function(require,module,exports){
 module.exports = require("./lib/index").Class;
 
-},{"./lib/index":34}],34:[function(require,module,exports){
+},{"./lib/index":33}],33:[function(require,module,exports){
 var Class = require("./src/Class");
 var Advices = require("./src/Advices");
 var UseExternal = require("./src/UseExternal");
@@ -2707,7 +2611,7 @@ Advices.add(
     }
 );
 
-},{"./src/Advices":35,"./src/Class":36,"./src/UseExternal":38}],35:[function(require,module,exports){
+},{"./src/Advices":34,"./src/Class":35,"./src/UseExternal":37}],34:[function(require,module,exports){
 var Iteration = require("./Iteration");
 var Utils = require("./Utils");
 
@@ -2746,7 +2650,7 @@ module.exports = Advices = {
     }
 };
 
-},{"./Iteration":37,"./Utils":39}],36:[function(require,module,exports){
+},{"./Iteration":36,"./Utils":38}],35:[function(require,module,exports){
 var Advices = require("./Advices");
 
 var Class = function(sourceClass, extendedProperties, _static) {
@@ -2797,7 +2701,7 @@ exp.static = function(mainProps) {
 
 module.exports = exp;
 
-},{"./Advices":35}],37:[function(require,module,exports){
+},{"./Advices":34}],36:[function(require,module,exports){
 var Utils = require("./Utils");
 
 module.exports = Iteration = function(definitionArray, props, pool, locals) {
@@ -2825,7 +2729,7 @@ module.exports = Iteration = function(definitionArray, props, pool, locals) {
     this.step();
 };
 
-},{"./Utils":39}],38:[function(require,module,exports){
+},{"./Utils":38}],37:[function(require,module,exports){
 var Advices = require("./Advices");
 
 module.exports = UseExternal = function(module){
@@ -2838,7 +2742,7 @@ module.exports = UseExternal = function(module){
     module.advices.forEach(Advices.add, Advices);
 };
 
-},{"./Advices":35}],39:[function(require,module,exports){
+},{"./Advices":34}],38:[function(require,module,exports){
 module.exports = Utils = {
     transpileMethod: function(method, meta, next, locals) {
         var methodToString = method.toString();
@@ -2899,99 +2803,7 @@ module.exports = Utils = {
     }
 };
 
-},{}],40:[function(require,module,exports){
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-'use strict';
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-},{}],41:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3219,7 +3031,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":43}],42:[function(require,module,exports){
+},{"_process":41}],40:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3583,7 +3395,7 @@ var Path = function () {
 exports.default = Path;
 module.exports = exports['default'];
 
-},{"search-params":46}],43:[function(require,module,exports){
+},{"search-params":43}],41:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -3769,215 +3581,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],44:[function(require,module,exports){
-'use strict';
-var strictUriEncode = require('strict-uri-encode');
-var objectAssign = require('object-assign');
-var decodeComponent = require('decode-uri-component');
-
-function encoderForArrayFormat(opts) {
-	switch (opts.arrayFormat) {
-		case 'index':
-			return function (key, value, index) {
-				return value === null ? [
-					encode(key, opts),
-					'[',
-					index,
-					']'
-				].join('') : [
-					encode(key, opts),
-					'[',
-					encode(index, opts),
-					']=',
-					encode(value, opts)
-				].join('');
-			};
-
-		case 'bracket':
-			return function (key, value) {
-				return value === null ? encode(key, opts) : [
-					encode(key, opts),
-					'[]=',
-					encode(value, opts)
-				].join('');
-			};
-
-		default:
-			return function (key, value) {
-				return value === null ? encode(key, opts) : [
-					encode(key, opts),
-					'=',
-					encode(value, opts)
-				].join('');
-			};
-	}
-}
-
-function parserForArrayFormat(opts) {
-	var result;
-
-	switch (opts.arrayFormat) {
-		case 'index':
-			return function (key, value, accumulator) {
-				result = /\[(\d*)\]$/.exec(key);
-
-				key = key.replace(/\[\d*\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				}
-
-				if (accumulator[key] === undefined) {
-					accumulator[key] = {};
-				}
-
-				accumulator[key][result[1]] = value;
-			};
-
-		case 'bracket':
-			return function (key, value, accumulator) {
-				result = /(\[\])$/.exec(key);
-				key = key.replace(/\[\]$/, '');
-
-				if (!result) {
-					accumulator[key] = value;
-					return;
-				} else if (accumulator[key] === undefined) {
-					accumulator[key] = [value];
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-
-		default:
-			return function (key, value, accumulator) {
-				if (accumulator[key] === undefined) {
-					accumulator[key] = value;
-					return;
-				}
-
-				accumulator[key] = [].concat(accumulator[key], value);
-			};
-	}
-}
-
-function encode(value, opts) {
-	if (opts.encode) {
-		return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
-	}
-
-	return value;
-}
-
-function keysSorter(input) {
-	if (Array.isArray(input)) {
-		return input.sort();
-	} else if (typeof input === 'object') {
-		return keysSorter(Object.keys(input)).sort(function (a, b) {
-			return Number(a) - Number(b);
-		}).map(function (key) {
-			return input[key];
-		});
-	}
-
-	return input;
-}
-
-exports.extract = function (str) {
-	return str.split('?')[1] || '';
-};
-
-exports.parse = function (str, opts) {
-	opts = objectAssign({arrayFormat: 'none'}, opts);
-
-	var formatter = parserForArrayFormat(opts);
-
-	// Create an object with no prototype
-	// https://github.com/sindresorhus/query-string/issues/47
-	var ret = Object.create(null);
-
-	if (typeof str !== 'string') {
-		return ret;
-	}
-
-	str = str.trim().replace(/^(\?|#|&)/, '');
-
-	if (!str) {
-		return ret;
-	}
-
-	str.split('&').forEach(function (param) {
-		var parts = param.replace(/\+/g, ' ').split('=');
-		// Firefox (pre 40) decodes `%3D` to `=`
-		// https://github.com/sindresorhus/query-string/pull/37
-		var key = parts.shift();
-		var val = parts.length > 0 ? parts.join('=') : undefined;
-
-		// missing `=` should be `null`:
-		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-		val = val === undefined ? null : decodeComponent(val);
-
-		formatter(decodeComponent(key), val, ret);
-	});
-
-	return Object.keys(ret).sort().reduce(function (result, key) {
-		var val = ret[key];
-		if (Boolean(val) && typeof val === 'object' && !Array.isArray(val)) {
-			// Sort object keys, not values
-			result[key] = keysSorter(val);
-		} else {
-			result[key] = val;
-		}
-
-		return result;
-	}, Object.create(null));
-};
-
-exports.stringify = function (obj, opts) {
-	var defaults = {
-		encode: true,
-		strict: true,
-		arrayFormat: 'none'
-	};
-
-	opts = objectAssign(defaults, opts);
-
-	var formatter = encoderForArrayFormat(opts);
-
-	return obj ? Object.keys(obj).sort().map(function (key) {
-		var val = obj[key];
-
-		if (val === undefined) {
-			return '';
-		}
-
-		if (val === null) {
-			return encode(key, opts);
-		}
-
-		if (Array.isArray(val)) {
-			var result = [];
-
-			val.slice().forEach(function (val2) {
-				if (val2 === undefined) {
-					return;
-				}
-
-				result.push(formatter(key, val2, result.length));
-			});
-
-			return result.join('&');
-		}
-
-		return encode(key, opts) + '=' + encode(val, opts);
-	}).filter(function (x) {
-		return x.length > 0;
-	}).join('&') : '';
-};
-
-},{"decode-uri-component":27,"object-assign":40,"strict-uri-encode":47}],45:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (process,global){
 // Copyright (c) Microsoft, All rights reserved. See License.txt in the project root for license information.
 
@@ -16369,7 +15973,7 @@ var ReactiveTest = Rx.ReactiveTest = {
 }.call(this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":43}],46:[function(require,module,exports){
+},{"_process":41}],43:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16468,15 +16072,7 @@ var omit = exports.omit = function omit(querystring, paramsToOmit) {
 
     return remainingQueryString || '';
 };
-},{}],47:[function(require,module,exports){
-'use strict';
-module.exports = function (str) {
-	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
-	});
-};
-
-},{}],48:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 /**
  * Convert array of 16 byte values to UUID string format of the form:
  * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
@@ -16501,7 +16097,7 @@ function bytesToUuid(buf, offset) {
 
 module.exports = bytesToUuid;
 
-},{}],49:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (global){
 // Unique ID creation requires a high quality random # generator.  In the
 // browser this is a little complicated due to unknown quality of Math.random()
@@ -16538,7 +16134,7 @@ if (!rng) {
 module.exports = rng;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 var rng = require('./lib/rng');
 var bytesToUuid = require('./lib/bytesToUuid');
 
@@ -16640,7 +16236,7 @@ function v1(options, buf, offset) {
 
 module.exports = v1;
 
-},{"./lib/bytesToUuid":48,"./lib/rng":49}],51:[function(require,module,exports){
+},{"./lib/bytesToUuid":44,"./lib/rng":45}],47:[function(require,module,exports){
 var Advices = require("kaop/Advices");
 var rx = require("rx");
 var EventEmitter = require("./event-emitter");
@@ -16649,8 +16245,6 @@ Advices.locals.$EJS = require("ejs");
 Advices.locals.$EJS.delimiter = "?";
 Advices.locals.$axiosInstance = require("../services/request");
 Advices.locals.$EE = new EventEmitter();
-Advices.locals.$QS = require("query-string");
-
 
 var domClickSource = rx.Observable.fromEvent(document, "click");
 var domKeydownSource = rx.Observable.fromEvent(document, "keydown");
@@ -16675,16 +16269,13 @@ Advices.add(
     })
   },
   function $GET(resource) {
-    if(meta.args.length) {
-      resource += "?" + $QS.stringify(meta.args[0]);
-    }
-    $axiosInstance.get(resource).then(function(result){
+    $axiosInstance.get(resource, meta.args[0]).then(function(result){
       meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
-    $axiosInstance.post(resource, meta.args[0]).then(function(result){
+    $axiosInstance.post(resource, { params: meta.args[0] }).then(function(result){
       meta.args.push(result.data);
       next();
     })
@@ -16736,7 +16327,7 @@ Advices.add(
   }
 )
 
-},{"../services/request":70,"./event-emitter":53,"ejs":28,"kaop/Advices":32,"query-string":44,"rx":45}],52:[function(require,module,exports){
+},{"../services/request":66,"./event-emitter":49,"ejs":27,"kaop/Advices":31,"rx":42}],48:[function(require,module,exports){
 var Class = require("kaop/Class");
 var uuid = require("uuid/v1");
 
@@ -16798,7 +16389,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   afterMount: function(){}
 })
 
-},{"kaop/Class":33,"uuid/v1":50}],53:[function(require,module,exports){
+},{"kaop/Class":32,"uuid/v1":46}],49:[function(require,module,exports){
 var Class = require("kaop/Class");
 
 module.exports = EventEmitter = Class({
@@ -16832,7 +16423,7 @@ module.exports = EventEmitter = Class({
     }
 });
 
-},{"kaop/Class":33}],54:[function(require,module,exports){
+},{"kaop/Class":32}],50:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("./component");
 var path = require("path-parser");
@@ -16885,7 +16476,7 @@ module.exports = Router = Class.inherits(Component, {
   }
 })
 
-},{"./component":52,"kaop/Class":33,"path-parser":42}],55:[function(require,module,exports){
+},{"./component":48,"kaop/Class":32,"path-parser":40}],51:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Router = require("../../common/router");
 
@@ -16909,10 +16500,10 @@ module.exports = AppRouter = Class.inherits(Router, {
   }, "$emit: 'profile-mode'"],
 })
 
-},{"../../common/router":54,"kaop/Class":33}],56:[function(require,module,exports){
+},{"../../common/router":50,"kaop/Class":32}],52:[function(require,module,exports){
 module.exports = "<div>\n  <?- new Nav().root() ?>\n</div>\n<div>\n  <?- new AppRouter().root() ?>\n</div>\n";
 
-},{}],57:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -16936,10 +16527,10 @@ module.exports = App = Class.inherits(Component, {
   }, "$emit: 'update-profiles'"]
 })
 
-},{"../../common/component":52,"../../services/storage":71,"./app.component.ejs":56,"kaop/Class":33}],58:[function(require,module,exports){
-module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile ?>\">\n  </div>\n  <span class=\"selection-profile\"></span>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
+},{"../../common/component":48,"../../services/storage":67,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
+module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n  </div>\n  <span class=\"selection-profile\"></span>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
 
-},{}],59:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Profile = require("../profile/profile.component");
 var storage = require("../../services/storage");
@@ -16972,13 +16563,13 @@ module.exports = Chat = Class.inherits(Profile, {
   }]
 })
 
-},{"../../services/storage":71,"../profile/profile.component":68,"./chat.component.ejs":58,"kaop/Class":33}],60:[function(require,module,exports){
+},{"../../services/storage":67,"../profile/profile.component":64,"./chat.component.ejs":54,"kaop/Class":32}],56:[function(require,module,exports){
 module.exports = "x-home div {\n  padding: 20px;\n}\n\nx-home ul {\n  margin: 0;\n  padding: 0;\n}\n\nx-home li {\n  list-style: none;\n}\n\nx-home li a {\n  text-decoration: none;\n  cursor: pointer;\n}\n\nx-home li.list-item {\n  padding: 10px;\n  font-size: 1.5em;\n  color: #2a3031;\n}\n\nx-home .profile-min img {\n    width: 50px;\n    border-radius: 100%;\n}\n\nx-home .profile-min {\n    display: inline;\n    cursor: pointer;\n}\n\nx-home .profile-min .profile-name {\n    margin-left: 20px;\n    vertical-align: 3vh;\n    color: black;\n}\n";
 
-},{}],61:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 module.exports = "<div class=\"home-container\">\n  <ul>\n    <? this.props.profiles.forEach(function(profile) { ?>\n      <li class=\"list-item\">\n        <a href=\"#/profile/<?= profile.name ?>\">\n          <div class=\"profile-min\">\n            <img src=\"<?= profile.profileImg ?>\">\n            <span class=\"profile-name\"><?= profile.name ?></span>\n          </div>\n        </a>\n      </li>\n    <? }) ?>\n  </ul>\n</div>\n";
 
-},{}],62:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -17003,13 +16594,13 @@ module.exports = Home = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":52,"../../services/storage":71,"./home.component.css":60,"./home.component.ejs":61,"kaop/Class":33}],63:[function(require,module,exports){
+},{"../../common/component":48,"../../services/storage":67,"./home.component.css":56,"./home.component.ejs":57,"kaop/Class":32}],59:[function(require,module,exports){
 module.exports = "x-nav .menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\nx-nav .menu ul {\n    margin: 0;\n    padding: 0;\n}\n\nx-nav li a {\n    text-decoration: none;\n    font-size: large;\n}\n\nx-nav .menu li {\n    list-style: none;\n}\n\nx-nav .menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\nx-nav .menu * {\n  color: white;\n  font-weight: bold;\n}\n\nx-nav .menu span {\n    margin: auto;\n}\n";
 
-},{}],64:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"menu profile-chat\">\n    <a class=\"a-left back\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <div class=\"menu\">\n    <ul>\n      <li>\n        <a href=\"#/profile/Me\">Profile</a>\n      </li>\n    </ul>\n  </div>\n<? } ?>\n";
 
-},{}],65:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 
@@ -17033,13 +16624,13 @@ module.exports = Nav = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":52,"./nav.component.css":63,"./nav.component.ejs":64,"kaop/Class":33}],66:[function(require,module,exports){
+},{"../../common/component":48,"./nav.component.css":59,"./nav.component.ejs":60,"kaop/Class":32}],62:[function(require,module,exports){
 module.exports = "x-profile .profile-content {\n    padding: 20px;\n}\n\nx-profile .profile-content.isFriend {\n    background: #e3baea;\n}\n\nx-profile .profile-content .profile-image {\n    height: 220px;\n    position: relative;\n}\n\nx-profile .profile-content .profile-image img {\n    margin: auto;\n    width: 200px;\n    border-radius: 100%;\n}\n\nx-profile .profile-content .profile-image {\n    display: flex;\n}\n\nx-profile .profile-content .profile-image .profile-status {\n    position: absolute;\n    right: 30px;\n    color: white;\n    font-weight: bold;\n    font-size: 18px;\n    width: 80px;\n    height: 80px;\n    border-radius: 100%;\n    text-align: center;\n    line-height: 4em;\n}\n\nx-profile span.online {\n    background: rgb(112, 214, 112);\n}\n\nx-profile span.offline {\n    background: rgb(255, 109, 109);\n}\n\nx-profile .profile-content .profile-summary .name-age {\n    font-size: 22px;\n}\n\nx-profile .profile-content .profile-summary .city {\n    color: #ff4c67;\n}\n\nx-profile .profile-content .profile-actions {\n  display: inline-grid;\n  width: 100%;\n}\n\nx-profile .profile-content .profile-actions a {\n    bottom: 0;\n    display: grid;\n    background: #3a3a3a;\n    text-align: center;\n    padding: 10px;\n    color: white;\n    vertical-align: middle;\n    font-weight: bold;\n}\n\nx-profile .profile-content.isFriend .profile-actions a {\n  background: red;\n}\n";
 
-},{}],67:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  // idc about months haha\n  var today = new Date();\n  var birth = new Date(timestamp);\n  return today.getFullYear() - birth.getFullYear();\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nthis.props.getStatus = function() {\n  return this.selectedProfile.online ? \"online\": \"offline\";\n}\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n<? if (!this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <span>profile not found</span>\n  </div>\n<? } else { ?>\n  <div class=\"profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>\">\n    <div class=\"profile-image\">\n      <? if(this.props.routeName !== \"Me\") { ?>\n        <span class=\"profile-status <?= this.props.getStatus() ?>\"><?= this.props.getStatus().toUpperCase() ?></span>\n      <? } ?>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <div>\n        <span class=\"name-age\">\n          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n        </span>\n      </div>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n    <? if (this.props.routeName !== \"Me\") { ?>\n      <div class=\"profile-actions\">\n        <a class=\"add-friend\"><?= this.props.selectedProfile.friend ? 'Remove friend' : 'Add as friend'?></a>\n      </div>\n    <? } ?>\n  </div>\n<? } ?>\n";
 
-},{}],68:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -17088,7 +16679,7 @@ module.exports = Profile = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":52,"../../services/storage":71,"./profile.component.css":66,"./profile.component.ejs":67,"kaop/Class":33}],69:[function(require,module,exports){
+},{"../../common/component":48,"../../services/storage":67,"./profile.component.css":62,"./profile.component.ejs":63,"kaop/Class":32}],65:[function(require,module,exports){
 require("./common/advices");
 var App = require("./components/app/app.component");
 var Nav = require("./components/nav/nav.component");
@@ -17101,7 +16692,7 @@ var app = new App();
 
 document.body.querySelector("#app").innerHTML = app.root();
 
-},{"./common/advices":51,"./components/app-router/app-router.component":55,"./components/app/app.component":57,"./components/chat/chat.component":59,"./components/home/home.component":62,"./components/nav/nav.component":65,"./components/profile/profile.component":68,"./services/storage":71}],70:[function(require,module,exports){
+},{"./common/advices":47,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":61,"./components/profile/profile.component":64,"./services/storage":67}],66:[function(require,module,exports){
 var axios = require("axios");
 
 module.exports = instance = axios.create({
@@ -17109,7 +16700,7 @@ module.exports = instance = axios.create({
   timeout: 1000
 });
 
-},{"axios":1}],71:[function(require,module,exports){
+},{"axios":1}],67:[function(require,module,exports){
 module.exports = {
   read: function(key) {
     return JSON.parse(sessionStorage.getItem(key));
@@ -17122,4 +16713,4 @@ module.exports = {
   }
 }
 
-},{}]},{},[69]);
+},{}]},{},[65]);

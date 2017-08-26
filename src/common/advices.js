@@ -6,8 +6,6 @@ Advices.locals.$EJS = require("ejs");
 Advices.locals.$EJS.delimiter = "?";
 Advices.locals.$axiosInstance = require("../services/request");
 Advices.locals.$EE = new EventEmitter();
-Advices.locals.$QS = require("query-string");
-
 
 var domClickSource = rx.Observable.fromEvent(document, "click");
 var domKeydownSource = rx.Observable.fromEvent(document, "keydown");
@@ -32,16 +30,13 @@ Advices.add(
     })
   },
   function $GET(resource) {
-    if(meta.args.length) {
-      resource += "?" + $QS.stringify(meta.args[0]);
-    }
-    $axiosInstance.get(resource).then(function(result){
+    $axiosInstance.get(resource, meta.args[0]).then(function(result){
       meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
-    $axiosInstance.post(resource, meta.args[0]).then(function(result){
+    $axiosInstance.post(resource, { params: meta.args[0] }).then(function(result){
       meta.args.push(result.data);
       next();
     })
