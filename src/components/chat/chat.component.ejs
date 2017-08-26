@@ -1,11 +1,24 @@
-<? if (this.props.selectedProfile) { ?>
-  <div>
-    <?= JSON.stringify(this.props.selectedProfile) ?>
-  </div>
-<? } ?>
+<?
+this.props.getChatClass = function(message){
+  return this.currentSession.id === message.fromId ? "from-session" : "from-selection";
+}
+?>
 
-<? if (this.props.currentSession) { ?>
-  <div>
-    <?= JSON.stringify(this.props.currentSession) ?>
+<div class="chat-container">
+  <div class="profile-min session-profile">
+    <img src="<?= this.props.currentSession.profileImg ?>">
   </div>
-<? } ?>
+  <div class="profile-min selection-profile">
+    <img src="<?= this.props.selectedProfile ?>">
+  </div>
+  <span class="selection-profile"></span>
+  <? this.props.messages.forEach(function(message){ ?>
+    <div class="message-item <?= this.props.getChatClass(message) ?>">
+      <?= message.content ?>
+    </div>
+  <? }, this) ?>
+</div>
+<div class="textbox-container">
+  <input placeholder="Write a message">
+  <a class="send"></a>
+</div>

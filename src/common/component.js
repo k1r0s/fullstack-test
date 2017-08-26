@@ -10,7 +10,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   html: "/empty/",
   props: {},
   constructor: [function(props) {
-    this.props = props;
+    this.props = props || {};
   }, "$setupListeners", "$registerDomListeners"],
   navigate: function(newUrl){
     newUrl = "#" + newUrl
@@ -18,8 +18,12 @@ module.exports = Component = Class.inherits(HTMLElement, {
   },
   set: function(key, val, silent) {
     this.props[key] = val;
-    if(silent) {return;}
+    if(silent) { return; }
+    if(!this.isRenderAllowed()) { return; }
     this.invalidate(this.template);
+  },
+  isRenderAllowed: function(){
+    return true;
   },
   root: function() {
     var tmpNode = document.createElement(this.selector);
@@ -27,7 +31,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
     tmpNode.setAttribute("id", this.uid);
     var htmlRoot = tmpNode.outerHTML;
     this.html = htmlRoot;
-    setTimeout(this.invalidate, 0, this.template);
+    setTimeout(this.set, 0, "init", true);
     setTimeout(this.afterMount, 1);
     return htmlRoot;
   },

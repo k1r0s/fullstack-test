@@ -8,9 +8,13 @@ module.exports = Profile = Class.inherits(Component, {
   css: require('./profile.component.css'),
   props: { selectedProfile: null, routeName: null },
   constructor: ["override", function(parent, props){
-    this.props.routeName = props.name;
-    parent(this.props);
+    props.routeName = props.name;
+    props.selectedProfile = null;
+    parent(props);
   }],
+  isRenderAllowed: function(){
+    return this.props.selectedProfile;
+  },
   "listen update-profiles": function(){
     this.selectProfile();
   },
@@ -35,7 +39,7 @@ module.exports = Profile = Class.inherits(Component, {
     }
   },
   afterMount: function(){
-    this.selectProfile();
+    this["listen update-profiles"]();
   },
   profileMatcherPredicate: function(prof){
     return prof.name === this.props.routeName;

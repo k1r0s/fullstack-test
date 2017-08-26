@@ -1,11 +1,12 @@
 var Advices = require("kaop/Advices");
 var rx = require("rx");
-var EventEmitter = require('./event-emitter');
+var EventEmitter = require("./event-emitter");
 
 Advices.locals.$EJS = require("ejs");
 Advices.locals.$EJS.delimiter = "?";
 Advices.locals.$axiosInstance = require("../services/request");
 Advices.locals.$EE = new EventEmitter();
+Advices.locals.$QS = require("query-string");
 
 
 var domClickSource = rx.Observable.fromEvent(document, "click");
@@ -31,6 +32,9 @@ Advices.add(
     })
   },
   function $GET(resource) {
+    if(meta.args.length) {
+      resource += "?" + $QS.stringify(meta.args[0]);
+    }
     $axiosInstance.get(resource).then(function(result){
       meta.args.push(result.data);
       next();
@@ -62,6 +66,9 @@ Advices.add(
     }
     meta.args.push(meta.scope.__compileFn(null));
     next();
+  },
+  function $valueof(selector) {
+    meta.args.push(meta.scope.q(selector).value);
   },
   function $registerDomListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
