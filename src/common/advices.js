@@ -20,7 +20,7 @@ Advices.locals.$domSource = rx.Observable.merge(
 
 Advices.add(
   function $emit(evid) {
-    $EE.emitEvent(evid, meta.result);
+    $EE.emitEvent(evid, [meta.result]);
   },
   function $setupListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })

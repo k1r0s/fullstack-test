@@ -16747,7 +16747,7 @@ Advices.locals.$domSource = rx.Observable.merge(
 
 Advices.add(
   function $emit(evid) {
-    $EE.emitEvent(evid, meta.result);
+    $EE.emitEvent(evid, [meta.result]);
   },
   function $setupListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
@@ -16929,18 +16929,18 @@ module.exports = AppRouter = Class.inherits(Router, {
   constructor: ["override", function(parent){
     parent(this.props)
   }],
-  "route /": function(){
+  "route /": [function(){
     var home = new Home();
     return home;
-  },
-  "route /chat/:name": function(params){
+  }, "$emit: 'list-mode'"],
+  "route /chat/:name": [function(params){
     var chat = new Chat(params);
     return chat;
-  },
-  "route /profile/:name": function(params){
+  }, "$emit: 'profile-mode'"],
+  "route /profile/:name": [function(params){
     var profile = new Profile(params);
     return profile;
-  }
+  }, "$emit: 'profile-mode'"],
 })
 
 },{"../../common/router":50,"kaop/Class":32}],52:[function(require,module,exports){
@@ -17003,7 +17003,7 @@ module.exports = Home = Class.inherits(Component, {
 */
 
 },{"../../common/component":49,"./home.component.css":56,"./home.component.ejs":57,"kaop/Class":32}],59:[function(require,module,exports){
-module.exports = "<ul>\n  <li>\n    <a href=\"#/\">Home</a>\n    <a href=\"#/profile/me\">Profile</a>\n  </li>\n</ul>\n";
+module.exports = "<? if(this.props.profile) { ?>\n  <a>Back</a>\n<? } else { ?>\n  <ul>\n    <li>\n      <a href=\"#/\">Home</a>\n      <a href=\"#/profile/me\">Profile</a>\n    </li>\n  </ul>\n<? } ?>\n";
 
 },{}],60:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -17011,8 +17011,17 @@ var Component = require("../../common/component");
 
 module.exports = Nav = Class.inherits(Component, {
   selector: "x-nav",
-  template: require('./nav.component.ejs')
-
+  template: require('./nav.component.ejs'),
+  props: { profile: null },
+  constructor: ["override", function(parent){
+    parent(this.props)
+  }],
+  "listen profile-mode": function(){
+    this.set("profile", true);
+  },
+  "listen list-mode": function(){
+    this.set("profile", false);
+  }
 })
 
 },{"../../common/component":49,"./nav.component.ejs":59,"kaop/Class":32}],61:[function(require,module,exports){
@@ -17031,22 +17040,26 @@ module.exports = Profile = Class.inherits(Component, {
     this.props.routeName = props.name;
     parent(this.props);
   }],
-  "listen update-profiles": function(profiles){
-    if(this.props.selectedProfile) { return; }
-    this.set("selectedProfile", profiles
-    .find(this.profileMatcherPredicate));
+  "listen update-profiles": function(){
+    this.selectProfile();
   },
-  afterMount: function(){
+  selectProfile: function(){
     if(this.props.routeName === "me") {
       this.set("selectedProfile", storage.read("session"))
     } else if(storage.read("profiles")) {
       this.set("selectedProfile", storage.read("profiles")
       .find(this.profileMatcherPredicate));
+    } else {
+      console.log("profile not found");
     }
+  },
+  afterMount: function(){
+    this.selectProfile();
   },
   profileMatcherPredicate: function(prof){
     return prof.name === this.props.routeName;
-  }
+  },
+
 })
 
 },{"../../common/component":49,"../../services/storage":65,"./profile.component.ejs":61,"kaop/Class":32}],63:[function(require,module,exports){
