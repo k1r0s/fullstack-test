@@ -32,25 +32,25 @@ Advices.add(
   },
   function $GET(resource) {
     $axiosInstance.get(resource).then(function(result){
-      meta.args.unshift(result.data);
+      meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
     $axiosInstance.post(resource, meta.args[0]).then(function(result){
-      meta.args.unshift(result.data);
+      meta.args.push(result.data);
       next();
     })
   },
   function $PUT(resource) {
-    $axiosInstance.put(resource, meta.args[0]).then(function(result){
-      meta.args.unshift(result.data);
+    $axiosInstance.put(resource + "/" + meta.args[0].id, meta.args[0]).then(function(result){
+      meta.args.push(result.data);
       next();
     })
   },
   function $DEL(resource) {
-    $axiosInstance.delete(resource).then(function(result){
-      meta.args.unshift(result.data);
+    $axiosInstance.delete(resource + "/" + meta.args[0].id).then(function(result){
+      meta.args.push(result.data);
       next();
     })
   },

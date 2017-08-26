@@ -16271,25 +16271,25 @@ Advices.add(
   },
   function $GET(resource) {
     $axiosInstance.get(resource).then(function(result){
-      meta.args.unshift(result.data);
+      meta.args.push(result.data);
       next();
     })
   },
   function $POST(resource) {
     $axiosInstance.post(resource, meta.args[0]).then(function(result){
-      meta.args.unshift(result.data);
+      meta.args.push(result.data);
       next();
     })
   },
   function $PUT(resource) {
-    $axiosInstance.put(resource, meta.args[0]).then(function(result){
-      meta.args.unshift(result.data);
+    $axiosInstance.put(resource + "/" + meta.args[0].id, meta.args[0]).then(function(result){
+      meta.args.push(result.data);
       next();
     })
   },
   function $DEL(resource) {
-    $axiosInstance.delete(resource).then(function(result){
-      meta.args.unshift(result.data);
+    $axiosInstance.delete(resource + "/" + meta.args[0].id).then(function(result){
+      meta.args.push(result.data);
       next();
     })
   },
@@ -16613,6 +16613,13 @@ module.exports = Profile = Class.inherits(Component, {
   "click .profile-image>img": function(){
     this.navigate("/chat/" + this.props.routeName);
   },
+  "click .add-friend": function(){
+    this.props.selectedProfile.friend = !this.props.selectedProfile.friend
+    this.addFriendHandler(this.props.selectedProfile);
+  },
+  addFriendHandler: ["$PUT: 'profiles'", function(request, responseData){
+    console.log(responseData);
+  }],
   selectProfile: function(){
     if(this.props.routeName === "Me") {
       this.set("selectedProfile", storage.read("session"));

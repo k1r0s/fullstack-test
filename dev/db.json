@@ -1,6 +1,8 @@
 {
   "profiles": [
     {
+      "id": 1,
+      "friend": false,
       "name": "Josefi",
       "email": "josefi.asd@zz.net",
       "online": true,
@@ -10,6 +12,8 @@
       "profileImg": "img/4928749237942.jpg"
     },
     {
+      "id": 2,
+      "friend": false,
       "name": "Joe",
       "email": "joe.asd@zz.net",
       "online": true,
@@ -19,6 +23,8 @@
       "profileImg": "img/123123123.jpg"
     },
     {
+      "id": 4,
+      "friend": false,
       "name": "Aby",
       "email": "aby.asd@zz.net",
       "online": false,
@@ -28,6 +34,8 @@
       "profileImg": "img/98981497843.jpg"
     },
     {
+      "id": 5,
+      "friend": false,
       "name": "Mario",
       "email": "mario.asd@zz.net",
       "online": true,
