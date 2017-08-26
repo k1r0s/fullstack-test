@@ -11,7 +11,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   props: {},
   constructor: [function(props) {
     this.props = props;
-  }, "$setupListeners"],
+  }, "$setupListeners", "$registerDomListeners"],
   navigate: function(newUrl){
     newUrl = "#" + newUrl
     location.hash = newUrl;
@@ -36,7 +36,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
       this.el = document.getElementById(this.uid);
     }
     this.replaceContent(compTemplate);
-  }, "$registerDomListeners"],
+  }],
   replaceContent: function(rawhtml) {
     if(this.css) {
       rawhtml += "<style>" + this.css + "</style>";

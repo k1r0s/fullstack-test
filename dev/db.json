@@ -2,7 +2,7 @@
   "profiles": [
     {
       "id": 1,
-      "friend": false,
+      "friend": true,
       "name": "Josefi",
       "email": "josefi.asd@zz.net",
       "online": true,

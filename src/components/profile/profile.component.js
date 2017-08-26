@@ -18,7 +18,7 @@ module.exports = Profile = Class.inherits(Component, {
     this.navigate("/chat/" + this.props.routeName);
   },
   "click .add-friend": function(){
-    this.props.selectedProfile.friend = !this.props.selectedProfile.friend
+    this.props.selectedProfile.friend = !this.props.selectedProfile.friend;
     this.addFriendHandler(this.props.selectedProfile);
   },
   addFriendHandler: ["$PUT: 'profiles'", function(request, responseData){
