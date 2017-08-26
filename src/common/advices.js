@@ -71,7 +71,7 @@ Advices.add(
       .filter(function(e){ return e.type === "click" })
       .filter(function(e) {
         var selector = eventHandler.split(" ")[1];
-        return meta.scope.q(selector).outerHTML === e.target.outerHTML;
+        return meta.scope.q(selector) && meta.scope.q(selector).outerHTML === e.target.outerHTML;
       })
       .subscribe(meta.scope[eventHandler])
     })

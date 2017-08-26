@@ -1,7 +1,14 @@
-<div>
+<div class="home-container">
   <ul>
     <? this.props.profiles.forEach(function(profile) { ?>
-      <a href="#/profile/<?= profile.name ?>"><?= profile.name ?></a>
+      <li class="list-item">
+        <a href="#/profile/<?= profile.name ?>">
+          <div class="profile-min">
+            <img src="<?= profile.profileImg ?>">
+            <span class="profile-name"><?= profile.name ?></span>
+          </div>
+        </a>
+      </li>
     <? }) ?>
   </ul>
 </div>

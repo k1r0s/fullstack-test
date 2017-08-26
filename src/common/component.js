@@ -39,7 +39,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   }, "$registerDomListeners"],
   replaceContent: function(rawhtml) {
     if(this.css) {
-      rawhtml += "<style scoped>" + this.css + "</style>";
+      rawhtml += "<style>" + this.css + "</style>";
     }
 
     if(this.el) {

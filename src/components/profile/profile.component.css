@@ -1,23 +1,23 @@
-.profile-content {
+x-profile .profile-content {
     padding: 20px;
 }
 
-.profile-content .profile-image {
+x-profile .profile-content .profile-image {
     height: 220px;
     position: relative;
 }
 
-.profile-content .profile-image img {
+x-profile .profile-content .profile-image img {
     margin: auto;
     width: 200px;
     border-radius: 100%;
 }
 
-.profile-content .profile-image {
+x-profile .profile-content .profile-image {
     display: flex;
 }
 
-.profile-content .profile-image .profile-status {
+x-profile .profile-content .profile-image .profile-status {
     position: absolute;
     right: 30px;
     color: white;
@@ -30,28 +30,34 @@
     line-height: 4em;
 }
 
-span.online {
+x-profile span.online {
     background: rgb(112, 214, 112);
 }
 
-span.offline {
+x-profile span.offline {
     background: rgb(255, 109, 109);
 }
 
-.profile-content .profile-summary .name-age {
+x-profile .profile-content .profile-summary .name-age {
     font-size: 22px;
 }
 
-.profile-content .profile-summary .city {
+x-profile .profile-content .profile-summary .city {
     color: #ff4c67;
 }
 
-.profile-content .profile-actions a {
+x-profile .profile-content .profile-actions {
+  display: inline-grid;
+  width: 100%;
+}
+
+x-profile .profile-content .profile-actions a {
     bottom: 0;
     display: grid;
     background: #3a3a3a;
     text-align: center;
     padding: 10px;
     color: white;
+    vertical-align: middle;
     font-weight: bold;
 }
