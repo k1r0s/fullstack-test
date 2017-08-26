@@ -19,7 +19,7 @@ module.exports = Profile = Class.inherits(Component, {
   },
   selectProfile: function(){
     if(this.props.routeName === "Me") {
-      this.set("selectedProfile", storage.read("session"))
+      this.set("selectedProfile", storage.read("session"));
     } else if(storage.read("profiles")) {
       this.set("selectedProfile", storage.read("profiles")
       .find(this.profileMatcherPredicate));

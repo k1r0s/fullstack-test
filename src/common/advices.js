@@ -1,6 +1,6 @@
 var Advices = require("kaop/Advices");
 var rx = require("rx");
-var EventEmitter = require('wolfy87-eventemitter');
+var EventEmitter = require('./event-emitter');
 
 Advices.locals.$EJS = require("ejs");
 Advices.locals.$EJS.delimiter = "?";
@@ -20,14 +20,14 @@ Advices.locals.$domSource = rx.Observable.merge(
 
 Advices.add(
   function $emit(evid) {
-    $EE.emitEvent(evid, [meta.result]);
+    $EE.fire(evid, meta.result);
   },
   function $setupListeners() {
     var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
     methods.filter(function(prop) { return prop.search("listen ") > -1 })
     .forEach(function(eventHandler){
       var evid = eventHandler.split(" ")[1];
-      $EE.addListener(evid, meta.scope[eventHandler]);
+      $EE.when(evid, meta.scope[eventHandler]);
     })
   },
   function $GET(resource) {

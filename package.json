@@ -17,8 +17,7 @@
     "kaop": "^2.7.10",
     "path-parser": "^2.0.2",
     "rx": "^4.1.0",
-    "uuid": "^3.1.0",
-    "wolfy87-eventemitter": "^5.2.2"
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
