@@ -1,0 +1,41 @@
+x-chat .chat-container {
+    background: #e4e4e4;
+}
+
+x-chat {
+
+}
+
+x-chat .chat-container {
+    position: relative;
+    background: #e4e4e4;
+    overflow:auto;
+}
+
+x-chat .session-profile {
+    position: absolute;
+    bottom: 0;
+}
+
+x-chat .selection-profile {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+x-chat .textbox-container {
+    height: 30px;
+    position: fixed;
+    bottom:0%;
+    width:85%;
+    margin: 15px;
+
+}
+
+x-chat .textbox-container input {
+    width:100%;
+    background: #f1eeee;
+    padding: 10px;
+    border-radius: 5%;
+    border: none;
+}

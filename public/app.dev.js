@@ -16327,7 +16327,7 @@ Advices.add(
   }
 )
 
-},{"../services/request":66,"./event-emitter":49,"ejs":27,"kaop/Advices":31,"rx":42}],48:[function(require,module,exports){
+},{"../services/request":67,"./event-emitter":49,"ejs":27,"kaop/Advices":31,"rx":42}],48:[function(require,module,exports){
 var Class = require("kaop/Class");
 var uuid = require("uuid/v1");
 
@@ -16527,10 +16527,13 @@ module.exports = App = Class.inherits(Component, {
   }, "$emit: 'update-profiles'"]
 })
 
-},{"../../common/component":48,"../../services/storage":67,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
-module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n  </div>\n  <span class=\"selection-profile\"></span>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
+},{"../../common/component":48,"../../services/storage":68,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
+module.exports = "x-chat .chat-container {\n    background: #e4e4e4;\n}\n\nx-chat {\n\n}\n\nx-chat .chat-container {\n    position: relative;\n    background: #e4e4e4;\n    overflow:auto;\n}\n\nx-chat .session-profile {\n    position: absolute;\n    bottom: 0;\n}\n\nx-chat .selection-profile {\n    position: absolute;\n    top: 0;\n    right: 0;\n}\n\nx-chat .textbox-container {\n    height: 30px;\n    position: fixed;\n    bottom:0%;\n    width:85%;\n    margin: 15px;\n\n}\n\nx-chat .textbox-container input {\n    width:100%;\n    background: #f1eeee;\n    padding: 10px;\n    border-radius: 5%;\n    border: none;\n}\n";
 
 },{}],55:[function(require,module,exports){
+module.exports = "<?\nthis.props.getChatClass = function(message){\n  return this.currentSession.id === message.fromId ? \"from-session\" : \"from-selection\";\n}\n?>\n\n<div class=\"chat-container\">\n  <div class=\"profile-min session-profile\">\n    <img src=\"<?= this.props.currentSession.profileImg ?>\">\n  </div>\n  <div class=\"profile-min selection-profile\">\n    <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n  </div>\n  <span class=\"selection-profile\"></span>\n  <? this.props.messages.forEach(function(message){ ?>\n    <div class=\"message-item <?= this.props.getChatClass(message) ?>\">\n      <?= message.content ?>\n    </div>\n  <? }, this) ?>\n</div>\n<div class=\"textbox-container\">\n  <input placeholder=\"Write a message\">\n  <a class=\"send\"></a>\n</div>\n";
+
+},{}],56:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Profile = require("../profile/profile.component");
 var storage = require("../../services/storage");
@@ -16541,6 +16544,7 @@ module.exports = Chat = Class.inherits(Profile, {
   constructor: ["override", function(parent, props){
     props.messages = [];
     parent(props);
+    this.css = require('./chat.component.css');
   }],
   isRenderAllowed: ["override", function(parent){
     return this.props.messages instanceof Array &&
@@ -16563,13 +16567,13 @@ module.exports = Chat = Class.inherits(Profile, {
   }]
 })
 
-},{"../../services/storage":67,"../profile/profile.component":64,"./chat.component.ejs":54,"kaop/Class":32}],56:[function(require,module,exports){
-module.exports = "x-home div {\n  padding: 20px;\n}\n\nx-home ul {\n  margin: 0;\n  padding: 0;\n}\n\nx-home li {\n  list-style: none;\n}\n\nx-home li a {\n  text-decoration: none;\n  cursor: pointer;\n}\n\nx-home li.list-item {\n  padding: 10px;\n  font-size: 1.5em;\n  color: #2a3031;\n}\n\nx-home .profile-min img {\n    width: 50px;\n    border-radius: 100%;\n}\n\nx-home .profile-min {\n    display: inline;\n    cursor: pointer;\n}\n\nx-home .profile-min .profile-name {\n    margin-left: 20px;\n    vertical-align: 3vh;\n    color: black;\n}\n";
-
-},{}],57:[function(require,module,exports){
-module.exports = "<div class=\"home-container\">\n  <ul>\n    <? this.props.profiles.forEach(function(profile) { ?>\n      <li class=\"list-item\">\n        <a href=\"#/profile/<?= profile.name ?>\">\n          <div class=\"profile-min\">\n            <img src=\"<?= profile.profileImg ?>\">\n            <span class=\"profile-name\"><?= profile.name ?></span>\n          </div>\n        </a>\n      </li>\n    <? }) ?>\n  </ul>\n</div>\n";
+},{"../../services/storage":68,"../profile/profile.component":65,"./chat.component.css":54,"./chat.component.ejs":55,"kaop/Class":32}],57:[function(require,module,exports){
+module.exports = "x-home div {\n  padding: 20px;\n}\n\nx-home ul {\n  margin: 0;\n  padding: 0;\n}\n\nx-home li {\n  list-style: none;\n}\n\nx-home li a {\n  text-decoration: none;\n  cursor: pointer;\n}\n\nx-home li.list-item {\n  padding: 10px;\n  font-size: 1.5em;\n  color: #2a3031;\n}\n\nx-home .profile-min {\n    display: inline;\n    cursor: pointer;\n}\n\nx-home .profile-min .profile-name {\n    margin-left: 20px;\n    vertical-align: 3vh;\n    color: black;\n}\n";
 
 },{}],58:[function(require,module,exports){
+module.exports = "<div class=\"home-container\">\n  <ul>\n    <? this.props.profiles.forEach(function(profile) { ?>\n      <li class=\"list-item\">\n        <a href=\"#/profile/<?= profile.name ?>\">\n          <div class=\"profile-min\">\n            <img src=\"<?= profile.profileImg ?>\">\n            <span class=\"profile-name\"><?= profile.name ?></span>\n          </div>\n        </a>\n      </li>\n    <? }) ?>\n  </ul>\n</div>\n";
+
+},{}],59:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -16594,13 +16598,13 @@ module.exports = Home = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":48,"../../services/storage":67,"./home.component.css":56,"./home.component.ejs":57,"kaop/Class":32}],59:[function(require,module,exports){
+},{"../../common/component":48,"../../services/storage":68,"./home.component.css":57,"./home.component.ejs":58,"kaop/Class":32}],60:[function(require,module,exports){
 module.exports = "x-nav .menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\nx-nav .menu ul {\n    margin: 0;\n    padding: 0;\n}\n\nx-nav li a {\n    text-decoration: none;\n    font-size: large;\n}\n\nx-nav .menu li {\n    list-style: none;\n}\n\nx-nav .menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\nx-nav .menu * {\n  color: white;\n  font-weight: bold;\n}\n\nx-nav .menu span {\n    margin: auto;\n}\n";
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"menu profile-chat\">\n    <a class=\"a-left back\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <div class=\"menu\">\n    <ul>\n      <li>\n        <a href=\"#/profile/Me\">Profile</a>\n      </li>\n    </ul>\n  </div>\n<? } ?>\n";
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 
@@ -16624,13 +16628,13 @@ module.exports = Nav = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":48,"./nav.component.css":59,"./nav.component.ejs":60,"kaop/Class":32}],62:[function(require,module,exports){
+},{"../../common/component":48,"./nav.component.css":60,"./nav.component.ejs":61,"kaop/Class":32}],63:[function(require,module,exports){
 module.exports = "x-profile .profile-content {\n    padding: 20px;\n}\n\nx-profile .profile-content.isFriend {\n    background: #e3baea;\n}\n\nx-profile .profile-content .profile-image {\n    height: 220px;\n    position: relative;\n}\n\nx-profile .profile-content .profile-image img {\n    margin: auto;\n    width: 200px;\n    border-radius: 100%;\n}\n\nx-profile .profile-content .profile-image {\n    display: flex;\n}\n\nx-profile .profile-content .profile-image .profile-status {\n    position: absolute;\n    right: 30px;\n    color: white;\n    font-weight: bold;\n    font-size: 18px;\n    width: 80px;\n    height: 80px;\n    border-radius: 100%;\n    text-align: center;\n    line-height: 4em;\n}\n\nx-profile span.online {\n    background: rgb(112, 214, 112);\n}\n\nx-profile span.offline {\n    background: rgb(255, 109, 109);\n}\n\nx-profile .profile-content .profile-summary .name-age {\n    font-size: 22px;\n}\n\nx-profile .profile-content .profile-summary .city {\n    color: #ff4c67;\n}\n\nx-profile .profile-content .profile-actions {\n  display: inline-grid;\n  width: 100%;\n}\n\nx-profile .profile-content .profile-actions a {\n    bottom: 0;\n    display: grid;\n    background: #3a3a3a;\n    text-align: center;\n    padding: 10px;\n    color: white;\n    vertical-align: middle;\n    font-weight: bold;\n}\n\nx-profile .profile-content.isFriend .profile-actions a {\n  background: red;\n}\n";
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  // idc about months haha\n  var today = new Date();\n  var birth = new Date(timestamp);\n  return today.getFullYear() - birth.getFullYear();\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nthis.props.getStatus = function() {\n  return this.selectedProfile.online ? \"online\": \"offline\";\n}\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n<? if (!this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <span>profile not found</span>\n  </div>\n<? } else { ?>\n  <div class=\"profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>\">\n    <div class=\"profile-image\">\n      <? if(this.props.routeName !== \"Me\") { ?>\n        <span class=\"profile-status <?= this.props.getStatus() ?>\"><?= this.props.getStatus().toUpperCase() ?></span>\n      <? } ?>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <div>\n        <span class=\"name-age\">\n          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n        </span>\n      </div>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n    <? if (this.props.routeName !== \"Me\") { ?>\n      <div class=\"profile-actions\">\n        <a class=\"add-friend\"><?= this.props.selectedProfile.friend ? 'Remove friend' : 'Add as friend'?></a>\n      </div>\n    <? } ?>\n  </div>\n<? } ?>\n";
 
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Component = require("../../common/component");
 var storage = require("../../services/storage");
@@ -16679,7 +16683,7 @@ module.exports = Profile = Class.inherits(Component, {
   }
 })
 
-},{"../../common/component":48,"../../services/storage":67,"./profile.component.css":62,"./profile.component.ejs":63,"kaop/Class":32}],65:[function(require,module,exports){
+},{"../../common/component":48,"../../services/storage":68,"./profile.component.css":63,"./profile.component.ejs":64,"kaop/Class":32}],66:[function(require,module,exports){
 require("./common/advices");
 var App = require("./components/app/app.component");
 var Nav = require("./components/nav/nav.component");
@@ -16692,7 +16696,7 @@ var app = new App();
 
 document.body.querySelector("#app").innerHTML = app.root();
 
-},{"./common/advices":47,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":61,"./components/profile/profile.component":64,"./services/storage":67}],66:[function(require,module,exports){
+},{"./common/advices":47,"./components/app-router/app-router.component":51,"./components/app/app.component":53,"./components/chat/chat.component":56,"./components/home/home.component":59,"./components/nav/nav.component":62,"./components/profile/profile.component":65,"./services/storage":68}],67:[function(require,module,exports){
 var axios = require("axios");
 
 module.exports = instance = axios.create({
@@ -16700,7 +16704,7 @@ module.exports = instance = axios.create({
   timeout: 1000
 });
 
-},{"axios":1}],67:[function(require,module,exports){
+},{"axios":1}],68:[function(require,module,exports){
 module.exports = {
   read: function(key) {
     return JSON.parse(sessionStorage.getItem(key));
@@ -16713,4 +16717,4 @@ module.exports = {
   }
 }
 
-},{}]},{},[65]);
+},{}]},{},[66]);

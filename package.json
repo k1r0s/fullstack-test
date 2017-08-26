@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./public/app.dev.js",
-    "serve:dev": "json-server --watch dev/db.json"
+    "serve:dev": "json-server --watch dev/db.json --port 8080"
   },
   "keywords": [],
   "author": "",

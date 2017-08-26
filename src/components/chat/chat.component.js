@@ -5,9 +5,12 @@ var storage = require("../../services/storage");
 module.exports = Chat = Class.inherits(Profile, {
   selector: "x-chat",
   template: require('./chat.component.ejs'),
+  css: require('./chat.component.css'),
   constructor: ["override", function(parent, props){
     props.messages = [];
     parent(props);
+    // kaop bug >.<!
+    this.css = require('./chat.component.css');
   }],
   isRenderAllowed: ["override", function(parent){
     return this.props.messages instanceof Array &&

@@ -22,11 +22,6 @@ x-home li.list-item {
   color: #2a3031;
 }
 
-x-home .profile-min img {
-    width: 50px;
-    border-radius: 100%;
-}
-
 x-home .profile-min {
     display: inline;
     cursor: pointer;
