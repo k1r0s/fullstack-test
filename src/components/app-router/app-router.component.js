@@ -3,7 +3,7 @@ var Router = require("../../common/router");
 
 module.exports = AppRouter = Class.inherits(Router, {
   selector: "x-app-router",
-  props: { default: "/profile/me", notFound: "/" },
+  props: { default: "/profile/Me", notFound: "/" },
   constructor: ["override", function(parent){
     parent(this.props)
   }],

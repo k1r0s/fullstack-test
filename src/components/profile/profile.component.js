@@ -15,7 +15,7 @@ module.exports = Profile = Class.inherits(Component, {
     this.selectProfile();
   },
   selectProfile: function(){
-    if(this.props.routeName === "me") {
+    if(this.props.routeName === "Me") {
       this.set("selectedProfile", storage.read("session"))
     } else if(storage.read("profiles")) {
       this.set("selectedProfile", storage.read("profiles")
