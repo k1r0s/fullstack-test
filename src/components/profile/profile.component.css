@@ -2,6 +2,10 @@ x-profile .profile-content {
     padding: 20px;
 }
 
+x-profile .profile-content.isFriend {
+    background: #e3baea;
+}
+
 x-profile .profile-content .profile-image {
     height: 220px;
     position: relative;
@@ -60,4 +64,8 @@ x-profile .profile-content .profile-actions a {
     color: white;
     vertical-align: middle;
     font-weight: bold;
+}
+
+x-profile .profile-content.isFriend .profile-actions a {
+  background: red;
 }

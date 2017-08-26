@@ -2,7 +2,7 @@
   "profiles": [
     {
       "id": 1,
-      "friend": true,
+      "friend": false,
       "name": "Josefi",
       "email": "josefi.asd@zz.net",
       "online": true,
@@ -13,7 +13,7 @@
     },
     {
       "id": 2,
-      "friend": false,
+      "friend": true,
       "name": "Joe",
       "email": "joe.asd@zz.net",
       "online": true,
@@ -35,7 +35,7 @@
     },
     {
       "id": 5,
-      "friend": false,
+      "friend": true,
       "name": "Mario",
       "email": "mario.asd@zz.net",
       "online": true,
