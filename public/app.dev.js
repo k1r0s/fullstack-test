@@ -17031,10 +17031,10 @@ module.exports = Nav = Class.inherits(Component, {
 })
 
 },{"../../common/component":49,"./nav.component.css":59,"./nav.component.ejs":60,"kaop/Class":32}],62:[function(require,module,exports){
-module.exports = "";
+module.exports = "x-profile .profile-content {\n    padding: 20px;\n}\n\nx-profile .profile-content .profile-image {\n    height: 200px;\n}\n\nx-profile .profile-content .profile-image img {\n    margin: auto;\n    width: 200px;\n    border-radius: 100%;\n}\n\nx-profile .profile-content .profile-image {\n    display: flex;\n}\n\nx-profile .profile-content .profile-image span {\n    position: absolute;\n}\n\nx-profile .profile-content .profile-summary span {\n\n}\n";
 
 },{}],63:[function(require,module,exports){
-module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  return new Date()\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n\n<? if (this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <div class=\"profile-image\">\n      <span class=\"profile-status\"><?= this.props.selectedProfile.online ? \"online\": \"offline\"?></span>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <h4>\n        <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n        <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n      </h4>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n  </div>\n\n<? } else { ?>\n  <span>profile not found</span>\n<? } ?>\n";
+module.exports = "<?\nthis.props.getYearsOld = function(timestamp){\n  // idc about months haha\n  var today = new Date();\n  var birth = new Date(timestamp);\n  return today.getFullYear() - birth.getFullYear();\n}\n\nthis.props.capitalize = function(str) {\n    return str.replace(/(?:^|\\s)\\S/g, function(a) { return a.toUpperCase(); });\n};\n\nvar defaultBio = \"Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut.\"\n\n?>\n\n<? if (!this.props.selectedProfile) { ?>\n  <div class=\"profile-content\">\n    <span>profile not found</span>\n  </div>\n<? } else { ?>\n  <div class=\"profile-content\">\n    <div class=\"profile-image\">\n      <span class=\"profile-status\"><?= this.props.selectedProfile.online ? \"online\": \"offline\"?></span>\n      <img src=\"<?= this.props.selectedProfile.profileImg ?>\">\n    </div>\n\n    <div class=\"profile-summary\">\n      <div>\n        <span class=\"name-age\">\n          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,\n          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>\n        </span>\n      </div>\n      <span class=\"city\"><?= this.props.selectedProfile.city ?></span>\n      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>\n    </div>\n    <div class=\"profile-actions\">\n      <a class=\"add-friend\">Add as friend</a>\n    </div>\n  </div>\n<? } ?>\n";
 
 },{}],64:[function(require,module,exports){
 var Class = require("kaop/Class");
@@ -17087,6 +17087,7 @@ document.body.querySelector("#app").innerHTML = app.root();
 storage.write("session", {
   "name": "Ciro Ivan",
   "email": "ciro.asd@zz.net",
+  "online": true,
   "pass": "1234",
   "city": "Alcoi",
   "dob": 656550000000,

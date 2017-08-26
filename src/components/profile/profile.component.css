@@ -1,0 +1,39 @@
+x-profile .profile-content {
+    padding: 20px;
+}
+
+x-profile .profile-content .profile-image {
+    height: 220px;
+}
+
+x-profile .profile-content .profile-image img {
+    margin: auto;
+    width: 200px;
+    border-radius: 100%;
+}
+
+x-profile .profile-content .profile-image {
+    display: flex;
+}
+
+x-profile .profile-content .profile-image span {
+    position: absolute;
+}
+
+x-profile .profile-content .profile-summary .name-age {
+    font-size: 22px;
+}
+
+x-profile .profile-content .profile-summary .city {
+    color: #ff4c67
+}
+
+x-profile .profile-content .profile-actions a {
+    bottom: 0;
+    display: grid;
+    background: #3a3a3a;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}

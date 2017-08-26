@@ -1,6 +1,9 @@
 <?
 this.props.getYearsOld = function(timestamp){
-  return new Date()
+  // idc about months haha
+  var today = new Date();
+  var birth = new Date(timestamp);
+  return today.getFullYear() - birth.getFullYear();
 }
 
 this.props.capitalize = function(str) {
@@ -11,8 +14,11 @@ var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non si
 
 ?>
 
-
-<? if (this.props.selectedProfile) { ?>
+<? if (!this.props.selectedProfile) { ?>
+  <div class="profile-content">
+    <span>profile not found</span>
+  </div>
+<? } else { ?>
   <div class="profile-content">
     <div class="profile-image">
       <span class="profile-status"><?= this.props.selectedProfile.online ? "online": "offline"?></span>
@@ -20,15 +26,17 @@ var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non si
     </div>
 
     <div class="profile-summary">
-      <h4>
-        <?= this.props.capitalize(this.props.selectedProfile.name) ?>,
-        <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>
-      </h4>
+      <div>
+        <span class="name-age">
+          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,
+          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>
+        </span>
+      </div>
       <span class="city"><?= this.props.selectedProfile.city ?></span>
       <p><?= this.props.selectedProfile.bio || defaultBio ?></p>
     </div>
+    <div class="profile-actions">
+      <a class="add-friend">Add as friend</a>
+    </div>
   </div>
-
-<? } else { ?>
-  <span>profile not found</span>
 <? } ?>
