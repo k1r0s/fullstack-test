@@ -22,7 +22,7 @@ module.exports = Profile = Class.inherits(Component, {
     this.addFriendHandler(this.props.selectedProfile);
   },
   addFriendHandler: ["$PUT: 'profiles'", function(request, responseData){
-    console.log(responseData);
+    this.set("selectedProfile", responseData);
   }],
   selectProfile: function(){
     if(this.props.routeName === "Me") {

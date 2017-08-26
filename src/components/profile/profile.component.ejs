@@ -23,7 +23,7 @@ var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non si
     <span>profile not found</span>
   </div>
 <? } else { ?>
-  <div class="profile-content">
+  <div class="profile-content <?= this.props.selectedProfile.friend && 'isFriend' ?>">
     <div class="profile-image">
       <span class="profile-status <?= this.props.getStatus() ?>"><?= this.props.getStatus().toUpperCase() ?></span>
       <img src="<?= this.props.selectedProfile.profileImg ?>">
