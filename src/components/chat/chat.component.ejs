@@ -1,3 +1,11 @@
 <? if (this.props.selectedProfile) { ?>
-  <?= this.props.selectedProfile.name ?>
+  <div>
+    <?= JSON.stringify(this.props.selectedProfile) ?>
+  </div>
+<? } ?>
+
+<? if (this.props.currentSession) { ?>
+  <div>
+    <?= JSON.stringify(this.props.currentSession) ?>
+  </div>
 <? } ?>

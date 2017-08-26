@@ -16515,18 +16515,23 @@ module.exports = App = Class.inherits(Component, {
 })
 
 },{"../../common/component":48,"../../services/storage":67,"./app.component.ejs":52,"kaop/Class":32}],54:[function(require,module,exports){
-module.exports = "<? if (this.props.selectedProfile) { ?>\n  <?= this.props.selectedProfile.name ?>\n<? } ?>\n";
+module.exports = "<? if (this.props.selectedProfile) { ?>\n  <div>\n    <?= JSON.stringify(this.props.selectedProfile) ?>\n  </div>\n<? } ?>\n\n<? if (this.props.currentSession) { ?>\n  <div>\n    <?= JSON.stringify(this.props.currentSession) ?>\n  </div>\n<? } ?>\n";
 
 },{}],55:[function(require,module,exports){
 var Class = require("kaop/Class");
 var Profile = require("../profile/profile.component");
+var storage = require("../../services/storage");
 
 module.exports = Chat = Class.inherits(Profile, {
   selector: "x-chat",
-  template: require('./chat.component.ejs')
+  template: require('./chat.component.ejs'),
+  selectProfile: ["override", function(parent){
+    this.set("currentSession", storage.read("session"), true);
+    parent();
+  }]
 })
 
-},{"../profile/profile.component":64,"./chat.component.ejs":54,"kaop/Class":32}],56:[function(require,module,exports){
+},{"../../services/storage":67,"../profile/profile.component":64,"./chat.component.ejs":54,"kaop/Class":32}],56:[function(require,module,exports){
 module.exports = "x-home div {\n  padding: 20px;\n}\n\nx-home ul {\n  margin: 0;\n  padding: 0;\n}\n\nx-home li {\n  list-style: none;\n}\n\nx-home li a {\n  text-decoration: none;\n  cursor: pointer;\n}\n\nx-home li.list-item {\n  padding: 10px;\n  font-size: 1.5em;\n  color: #2a3031;\n}\n\nx-home .profile-min img {\n    width: 50px;\n    border-radius: 100%;\n}\n\nx-home .profile-min {\n    display: inline;\n    cursor: pointer;\n}\n\nx-home .profile-min .profile-name {\n    margin-left: 20px;\n    vertical-align: 3vh;\n    color: black;\n}\n";
 
 },{}],57:[function(require,module,exports){
