@@ -10,5 +10,21 @@ describe("profile-add-friend.test", function(){
   })
 
   it("e2e test 2", function(done){
+    nightmare
+      .wait("a.add-friend")
+      .click("a.add-friend")
+      .wait(".profile-content.isFriend")
+      .evaluate(function () {
+          return document.querySelector(".add-friend").innerHTML;
+      })
+      .end()
+      .then(function (result) {
+        assert(result.search("Remove friend") > -1);
+        done();
+      })
+      .catch(function (error) {
+        throw error;
+      });
+
   })
 })

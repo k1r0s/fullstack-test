@@ -60,7 +60,7 @@ IMO too few criteria and screen behavior description, for example I made a "home
 
 Also, since no info is provided about how to retrieve a "session" I hardcoded on the backend but "messages" resource is a bit messy since you have to perform two calls to retrieve whole message collection for one conversation. This was not by design but I realize too late about that. Well, the project has some falls in design since I focused a lot on technical aspects, like build a whole js framework (lol), rather than how app behaves in terms of domain/business.
 
-(I think the decision about ban frameworks was great).
+(I think the decision about ban known frameworks was great).
 
 If this was a real project:
 
@@ -71,10 +71,10 @@ If this was a real project:
 - endpoints have a relationship with current session (/messages?fromId=xx to retrieve whole conversation)
 - finish all the API endpoints, now only used enpoints do work (IE you cannot post a profile)
 - use virtualdom instead of ejs
-- bundle splitting (isnt too big yet, but..)
-- bundle minification
+- bundle minification / bundle splitting
 - use a css framework
 - use a real frontend framework
+- styles are not good as I wish
 
 ### Contact
 
