@@ -37,11 +37,11 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=0;
 
-INSERT INTO `profiles` (`name`, `email`, `pass`, `city`, `dob`, `profileImg`) VALUES
-("Josefi", "josefi.asd@zz.net", "1234", "Albacete", 129832800000, "img/4928749237942.jpg"),
-("Joe", "joe.asd@zz.net", "1234", "Lisboa", 621452840000, "img/123123123.jpg"),
-("Aby", "aby.asd@zz.net", "1234", "Niza", 721521803400, "img/98981497843.jpg"),
-("Mario", "mario.asd@zz.net", "1234", "Milan", 601022840100, "img/231123221.jpg");
+INSERT INTO `profiles` (`name`, `email`, `online`, `friend`, `pass`, `city`, `dob`, `profileImg`) VALUES
+("Josefi", "josefi.asd@zz.net", 1, 0, "1234", "Albacete", 129832800000, "img/4928749237942.jpg"),
+("Joe", "joe.asd@zz.net", 1, 1, "1234", "Lisboa", 621452840000, "img/123123123.jpg"),
+("Aby", "aby.asd@zz.net", 0, 0, "1234", "Niza", 721521803400, "img/98981497843.jpg"),
+("Mario", "mario.asd@zz.net", 1, 1, "1234", "Milan", 601022840100, "img/231123221.jpg");
 
 INSERT INTO `session` (`name`, `email`, `pass`, `city`, `dob`, `profileImg`) VALUES
 ("Ciro Ivan", "ciro.asd@zz.net", "1234", "Barcelona", 656550000000, "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460");

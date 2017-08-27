@@ -14,9 +14,18 @@ class MySQLAdapter {
   function __destruct() {
       $this->close();
   }
+
+  public function getAffectedRows() {
+    return $this->_num_rows;
+  }
+
   private function connect() {
       $this->_link = mysql_connect(DB_SERVER, DB_USER, DB_PASSWORD) or die(mysql_error());
       mysql_select_db(DB_DATABASE, $this->_link) or die(mysql_error());
+  }
+
+  public function getLastError() {
+    return mysql_error();
   }
 
   public function query($sql_string) {

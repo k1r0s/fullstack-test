@@ -8,8 +8,9 @@ $resourceList = array("session", "messages", "profiles");
 $path = explode("/", $_SERVER["SCRIPT_NAME"]);
 $resourceName = isset($path[1]) ? $path[1] : null;
 $resourceId = isset($path[2]) ? $path[2] : null;
+$method = $_SERVER["REQUEST_METHOD"];
 
-if(!$resourceName) {
+if(!$resourceName || (($method == "PUT" || $method == "DELETE") && is_null($resourceId))) {
   http_response_code(400);
   exit();
 }
@@ -21,7 +22,6 @@ if(!in_array($resourceName, $resourceList)) {
 
 define("APP_ROOT", $_SERVER["DOCUMENT_ROOT"]);
 
-$method = $_SERVER["REQUEST_METHOD"];
 $data = file_get_contents("php://input");
 
 require APP_ROOT."/resource/common.php";
