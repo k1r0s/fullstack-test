@@ -1,6 +1,5 @@
 <?
 this.props.getYearsOld = function(timestamp){
-  // idc about months haha
   var today = new Date();
   var birth = new Date(timestamp);
   return today.getFullYear() - birth.getFullYear();

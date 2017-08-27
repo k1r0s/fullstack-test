@@ -35,7 +35,7 @@ module.exports = Chat = Class.inherits(Profile, {
         "fromId": this.props.selectedProfile.id,
         "toId": this.props.currentSession.id,
         "content": "Hi, how are you! Wana some turing test?",
-        "timestamp": Date.now()
+        "timestamp": new Date
       });
     }.bind(this), 1500);
 
@@ -46,7 +46,7 @@ module.exports = Chat = Class.inherits(Profile, {
       "fromId": this.props.currentSession.id,
       "toId": this.props.selectedProfile.id,
       "content": inputValue,
-      "timestamp": Date.now()
+      "timestamp": new Date
     });
   }],
   addMessageHandler: ["$sessionCreate: 'messages'", function(request, responseData){

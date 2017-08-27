@@ -3,7 +3,9 @@ this.props.getChatClass = function(message){
   return this.currentSession.id === message.fromId ? "from-session" : "from-selection";
 }
 
-this.props.sortMessages = function(messageA, messageB) { return messageA.timestamp - messageB.timestamp; }
+this.props.sortMessages = function(messageA, messageB) {
+  return new Date(messageA.timestamp).getTime() - new Date(messageB.timestamp).getTime();
+}
 ?>
 
 <div class="chat-container">
