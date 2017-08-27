@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# if [ $EUID -gt 0 ]; then
+#   echo "Please run as root"
+#   exit
+# fi
+
+# stuff
+
+user="root"
+password="apasswordveryhardtowrite"
+database="teamcmp"
+script=back-php/database.sql
+
+
+mysql -u $user -p$password $database < $script
