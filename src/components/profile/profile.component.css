@@ -1,5 +1,7 @@
 x-profile .profile-content {
     padding: 20px;
+    height: 85vh;
+    overflow: auto;
 }
 
 x-profile .profile-content.isFriend {
@@ -51,8 +53,14 @@ x-profile .profile-content .profile-summary .city {
 }
 
 x-profile .profile-content .profile-actions {
+  margin-top: 2vh;
   display: inline-grid;
-  width: 100%;
+  width: 90%;
+  position: fixed;
+  color: green;
+  bottom: 0;
+  right: 0;
+  padding: 1vh 5%;
 }
 
 x-profile .profile-content .profile-actions a {
