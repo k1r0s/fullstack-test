@@ -17,6 +17,10 @@ module.exports = Nav = Class.inherits(Component, {
     this.set("profile", false);
   },
   "click a.back": function(){
-    this.navigate("/");
+    if(location.hash.search("chat") > -1) {
+      location.hash = location.hash.replace("chat", "profile");
+    } else {
+      this.navigate("/");
+    }
   }
 })
