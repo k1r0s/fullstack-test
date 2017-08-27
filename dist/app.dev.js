@@ -4184,7 +4184,7 @@ module.exports = Chat = Class.inherits(Profile, {
   "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
     if(!inputValue) { return; }
     this.addMessageHandler({
-      "fromId": 3,
+      "fromId": this.props.currentSession.id,
       "toId": this.props.selectedProfile.id,
       "content": inputValue,
       "timestamp": Date.now()
@@ -4231,7 +4231,7 @@ module.exports = Home = Class.inherits(Component, {
 })
 
 },{"../../common/component":47,"../../services/storage":68,"./home.component.css":56,"./home.component.ejs":57,"kaop/Class":32}],59:[function(require,module,exports){
-module.exports = "x-nav .menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\nx-nav .menu ul {\n    margin: 0;\n    padding: 0;\n}\n\nx-nav li a {\n    text-decoration: none;\n    font-size: large;\n}\n\nx-nav .menu li {\n    list-style: none;\n}\n\nx-nav .menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\nx-nav .menu * {\n  color: white;\n  font-weight: bold;\n}\n\nx-nav .menu span {\n    margin: auto;\n}\n";
+module.exports = "x-nav .menu {\n    background: #3a3a3a;\n    padding: 20px;\n    display: flex;\n}\n\nx-nav .menu ul {\n    margin: 0;\n    padding: 0;\n}\n\nx-nav li a {\n    text-decoration: none;\n    font-size: large;\n}\n\nx-nav .menu li {\n    list-style: none;\n}\n\nx-nav .menu a.a-left:after {\n  content: \"\\25C0\";\n}\n\nx-nav .menu * {\n  color: white;\n  font-weight: bold;\n  font-size: 25px;\n}\n\nx-nav .menu span {\n    margin: auto;\n}\n";
 
 },{}],60:[function(require,module,exports){
 module.exports = "<? if(this.props.profile) { ?>\n  <div class=\"menu profile-chat\">\n    <a class=\"a-left back\"></a>\n    <span><?= this.props.title ?></span>\n  </div>\n<? } else { ?>\n  <div class=\"menu\">\n    <ul>\n      <li>\n        <a href=\"#/profile/Me\">Profile</a>\n      </li>\n    </ul>\n  </div>\n<? } ?>\n";
@@ -4256,7 +4256,11 @@ module.exports = Nav = Class.inherits(Component, {
     this.set("profile", false);
   },
   "click a.back": function(){
-    this.navigate("/");
+    if(location.hash.search("chat") > -1) {
+      location.hash = location.hash.replace("chat", "profile");
+    } else {
+      this.navigate("/");
+    }
   }
 })
 

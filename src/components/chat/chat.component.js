@@ -43,7 +43,7 @@ module.exports = Chat = Class.inherits(Profile, {
   "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
     if(!inputValue) { return; }
     this.addMessageHandler({
-      "fromId": 3,
+      "fromId": this.props.currentSession.id,
       "toId": this.props.selectedProfile.id,
       "content": inputValue,
       "timestamp": Date.now()

@@ -43,5 +43,5 @@ INSERT INTO `profiles` (`name`, `email`, `online`, `friend`, `pass`, `city`, `do
 ("Aby", "aby.asd@zz.net", 0, 0, "1234", "Niza", 721521803400, "img/98981497843.jpg"),
 ("Mario", "mario.asd@zz.net", 1, 1, "1234", "Milan", 601022840100, "img/231123221.jpg");
 
-INSERT INTO `session` (`name`, `email`, `pass`, `city`, `dob`, `profileImg`) VALUES
-("Ciro Ivan", "ciro.asd@zz.net", "1234", "Barcelona", 656550000000, "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460");
+INSERT INTO `session` (`id`, `name`, `email`, `pass`, `city`, `dob`, `profileImg`) VALUES
+(227, "Ciro Ivan", "ciro.asd@zz.net", "1234", "Barcelona", 656550000000, "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460");
