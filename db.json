@@ -1,0 +1,87 @@
+{
+  "session": {
+    "id": 227,
+    "name": "Ciro Ivan",
+    "email": "ciro.asd@zz.net",
+    "pass": "1234",
+    "city": "Barcelona",
+    "dob": "1990-09-22",
+    "profileImg": "https://avatars2.githubusercontent.com/u/6052309?v=4&s=460"
+  },
+  "profiles": [
+    {
+      "id": 1,
+      "friend": false,
+      "name": "Josefi",
+      "email": "josefi.asd@zz.net",
+      "online": true,
+      "pass": "1234",
+      "city": "Albacete",
+      "dob": "1973-12-03",
+      "profileImg": "img/4928749237942.jpg"
+    },
+    {
+      "id": 2,
+      "friend": false,
+      "name": "Joe",
+      "email": "joe.asd@zz.net",
+      "online": true,
+      "pass": "1234",
+      "city": "Lisboa",
+      "dob": "1996-04-03",
+      "profileImg": "img/123123123.jpg"
+    },
+    {
+      "id": 4,
+      "friend": false,
+      "name": "Aby",
+      "email": "aby.asd@zz.net",
+      "online": false,
+      "pass": "1234",
+      "city": "Niza",
+      "dob": "1988-08-20",
+      "profileImg": "img/98981497843.jpg"
+    },
+    {
+      "id": 5,
+      "friend": true,
+      "name": "Mario",
+      "email": "mario.asd@zz.net",
+      "online": true,
+      "pass": "1234",
+      "city": "Milan",
+      "dob": "1989-05-15",
+      "profileImg": "img/231123221.jpg"
+    }
+  ],
+  "messages": [
+    {
+      "fromId": 4,
+      "toId": 3,
+      "content": "Hi, how are you! Wana some turing test?",
+      "timestamp": 1503789859917,
+      "id": 1
+    },
+    {
+      "fromId": 3,
+      "toId": 4,
+      "content": "dflsjflaksdj",
+      "timestamp": 1503789892458,
+      "id": 2
+    },
+    {
+      "fromId": 3,
+      "toId": 4,
+      "content": "Hola de nuevo, que tal?",
+      "timestamp": 1503789975508,
+      "id": 3
+    },
+    {
+      "fromId": 4,
+      "toId": 3,
+      "content": "Hi, how are you! Wana some turing test?",
+      "timestamp": 1503790038646,
+      "id": 4
+    }
+  ]
+}

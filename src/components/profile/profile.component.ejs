@@ -1,0 +1,49 @@
+<?
+this.props.getYearsOld = function(timestamp){
+  var today = new Date();
+  var birth = new Date(timestamp);
+  return today.getFullYear() - birth.getFullYear();
+}
+
+this.props.capitalize = function(str) {
+    return str.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+};
+
+this.props.getStatus = function() {
+  return this.selectedProfile.online ? "online": "offline";
+}
+
+var defaultBio = "Sit et aspernatur enim neque velit optio repellat. Sunt non sit soluta soluta vero rerum nulla. Consequatur facere ut doloremque blanditiis molestias similique ut ipsam. Quos fugit quisquam corrupti. Consequatur quasi aut blanditiis ut."
+
+?>
+
+<? if (!this.props.selectedProfile) { ?>
+  <div class="profile-content">
+    <span>profile not found</span>
+  </div>
+<? } else { ?>
+  <div class="profile-content <?= !this.props.selectedProfile.friend || 'isFriend' ?>">
+    <div class="profile-image">
+      <? if(this.props.routeName !== "Me") { ?>
+        <span class="profile-status <?= this.props.getStatus() ?>"><?= this.props.getStatus().toUpperCase() ?></span>
+      <? } ?>
+      <img src="<?= this.props.selectedProfile.profileImg ?>">
+    </div>
+
+    <div class="profile-summary">
+      <div>
+        <span class="name-age">
+          <?= this.props.capitalize(this.props.selectedProfile.name) ?>,
+          <?= this.props.getYearsOld(this.props.selectedProfile.dob) ?>
+        </span>
+      </div>
+      <span class="city"><?= this.props.selectedProfile.city ?></span>
+      <p><?= this.props.selectedProfile.bio || defaultBio ?></p>
+    </div>
+    <? if (this.props.routeName !== "Me") { ?>
+      <div class="profile-actions">
+        <a class="add-friend"><?= this.props.selectedProfile.friend ? 'Remove friend' : 'Add as friend'?></a>
+      </div>
+    <? } ?>
+  </div>
+<? } ?>

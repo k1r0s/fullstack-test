@@ -1,0 +1,29 @@
+<?
+this.props.getChatClass = function(message){
+  return this.currentSession.id === message.fromId ? "from-session" : "from-selection";
+}
+
+this.props.sortMessages = function(messageA, messageB) {
+  return new Date(messageA.timestamp).getTime() - new Date(messageB.timestamp).getTime();
+}
+?>
+
+<div class="chat-container">
+  <div class="profile-min session-profile">
+    <img src="<?= this.props.currentSession.profileImg ?>">
+  </div>
+  <div class="profile-min selection-profile">
+    <img src="<?= this.props.selectedProfile.profileImg ?>">
+  </div>
+  <? this.props.messages.sort(this.props.sortMessages).forEach(function(message){ ?>
+    <div class="message-item <?= this.props.getChatClass(message) ?>">
+
+      <span></span>
+      <?= message.content ?>
+    </div>
+  <? }, this) ?>
+</div>
+<div class="textbox-container">
+  <input placeholder="Write a message">
+  <a class="send"></a>
+</div>

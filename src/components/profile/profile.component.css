@@ -1,0 +1,79 @@
+x-profile .profile-content {
+    padding: 20px;
+    height: 85vh;
+    overflow: auto;
+}
+
+x-profile .profile-content.isFriend {
+    background: #e3baea;
+}
+
+x-profile .profile-content .profile-image {
+    height: 220px;
+    position: relative;
+}
+
+x-profile .profile-content .profile-image img {
+    margin: auto;
+    width: 200px;
+    border-radius: 100%;
+}
+
+x-profile .profile-content .profile-image {
+    display: flex;
+}
+
+x-profile .profile-content .profile-image .profile-status {
+    position: absolute;
+    right: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 4em;
+}
+
+x-profile span.online {
+    background: rgb(112, 214, 112);
+}
+
+x-profile span.offline {
+    background: rgb(255, 109, 109);
+}
+
+x-profile .profile-content .profile-summary .name-age {
+    font-size: 22px;
+}
+
+x-profile .profile-content .profile-summary .city {
+    color: #ff4c67;
+}
+
+x-profile .profile-content .profile-actions {
+  margin-top: 2vh;
+  display: inline-grid;
+  width: 90%;
+  position: fixed;
+  color: green;
+  bottom: 0;
+  right: 0;
+  padding: 1vh 5%;
+}
+
+x-profile .profile-content .profile-actions a {
+    bottom: 0;
+    display: grid;
+    background: #3a3a3a;
+    text-align: center;
+    padding: 10px;
+    color: white;
+    vertical-align: middle;
+    font-weight: bold;
+}
+
+x-profile .profile-content.isFriend .profile-actions a {
+  background: red;
+}

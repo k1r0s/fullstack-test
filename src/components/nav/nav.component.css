@@ -1,0 +1,33 @@
+x-nav .menu {
+    background: #3a3a3a;
+    padding: 20px;
+    display: flex;
+}
+
+x-nav .menu ul {
+    margin: 0;
+    padding: 0;
+}
+
+x-nav li a {
+    text-decoration: none;
+    font-size: large;
+}
+
+x-nav .menu li {
+    list-style: none;
+}
+
+x-nav .menu a.a-left:after {
+  content: "\25C0";
+}
+
+x-nav .menu * {
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+x-nav .menu span {
+    margin: auto;
+}

@@ -1,0 +1,34 @@
+x-home div {
+  padding: 20px;
+}
+
+x-home ul {
+  margin: 0;
+  padding: 0;
+}
+
+x-home li {
+  list-style: none;
+}
+
+x-home li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+x-home li.list-item {
+  padding: 10px;
+  font-size: 1.5em;
+  color: #2a3031;
+}
+
+x-home .profile-min {
+    display: inline;
+    cursor: pointer;
+}
+
+x-home .profile-min .profile-name {
+    margin-left: 20px;
+    vertical-align: 3vh;
+    color: black;
+}

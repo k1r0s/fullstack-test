@@ -1,0 +1,14 @@
+<? if(this.props.profile) { ?>
+  <div class="menu profile-chat">
+    <a class="a-left back"></a>
+    <span><?= this.props.title ?></span>
+  </div>
+<? } else { ?>
+  <div class="menu">
+    <ul>
+      <li>
+        <a href="#/profile/Me">Profile</a>
+      </li>
+    </ul>
+  </div>
+<? } ?>
