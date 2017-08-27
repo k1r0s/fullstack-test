@@ -1,7 +1,7 @@
 <?php
 
 function createResource($database, $resourceId, $data) {
-
+  
 }
 
 function readResource($database, $resourceId, $data) {

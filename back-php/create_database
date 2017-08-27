@@ -10,7 +10,7 @@
 user="root"
 password="apasswordveryhardtowrite"
 database="teamcmp"
-script=back-php/database.sql
+script=back-php/creation_script.sql
 
 
 mysql -u $user -p$password $database < $script
