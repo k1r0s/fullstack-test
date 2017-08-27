@@ -82,48 +82,6 @@
       "content": "Hi, how are you! Wana some turing test?",
       "timestamp": 1503790038646,
       "id": 4
-    },
-    {
-      "fromId": 3,
-      "toId": 4,
-      "content": "Holiiiiiiiiiiiii",
-      "timestamp": 1503790048994,
-      "id": 5
-    },
-    {
-      "fromId": 4,
-      "toId": 3,
-      "content": "Hi, how are you! Wana some turing test?",
-      "timestamp": 1503790078627,
-      "id": 6
-    },
-    {
-      "fromId": 3,
-      "toId": 4,
-      "content": "LOl, why that message is hidden",
-      "timestamp": 1503790139661,
-      "id": 7
-    },
-    {
-      "fromId": 4,
-      "toId": 3,
-      "content": "Hi, how are you! Wana some turing test?",
-      "timestamp": 1503790218080,
-      "id": 8
-    },
-    {
-      "fromId": 4,
-      "toId": 3,
-      "content": "Hi, how are you! Wana some turing test?",
-      "timestamp": 1503790226711,
-      "id": 9
-    },
-    {
-      "fromId": 3,
-      "toId": 4,
-      "content": "Me das asco, puto bot de mierda",
-      "timestamp": 1503790236297,
-      "id": 10
     }
   ]
 }
