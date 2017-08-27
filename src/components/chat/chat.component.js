@@ -19,13 +19,29 @@ module.exports = Chat = Class.inherits(Profile, {
   }],
   afterMount: ["override", function(parent){
     parent();
+    this.set("messages", [], true);
     this.set("currentSession", storage.read("session"), true);
     this.messagesHandler({
       fromId: this.props.currentSession.id,
       toId: this.props.selectedProfile.id
     });
+    this.messagesHandler({
+      toId: this.props.currentSession.id,
+      fromId: this.props.selectedProfile.id
+    });
+    // random message
+    setTimeout(function(){
+      this.addMessageHandler({
+        "fromId": this.props.selectedProfile.id,
+        "toId": 3,
+        "content": "Hi, how are you! Wana some turing test?",
+        "timestamp": Date.now()
+      });
+    }.bind(this), 1500);
+
   }],
   "click a.send": ["$valueof: '.textbox-container>input'", function(inputValue){
+    if(!inputValue) { return; }
     this.addMessageHandler({
       "fromId": 3,
       "toId": this.props.selectedProfile.id,
@@ -33,19 +49,11 @@ module.exports = Chat = Class.inherits(Profile, {
       "timestamp": Date.now()
     });
   }],
-  addMessageHandler: ["$POST: 'messages'", function(request, responseData){
+  addMessageHandler: ["$sessionCreate: 'messages'", function(request, responseData){
     this.props.messages.push(responseData);
     this.set("messages", this.props.messages);
   }],
-  messagesHandler: ["$GET: 'messages'", function(request, responseData){
-    this.set("messages", responseData);
-
-    // fake message
-    this.addMessageHandler({
-      "fromId": this.props.selectedProfile.id,
-      "toId": 3,
-      "content": "Hi, how are you! Wana some turing test?",
-      "timestamp": Date.now()
-    });
+  messagesHandler: ["$sessionRead: 'messages'", function(request, responseData){
+    this.set("messages", this.props.messages.concat(responseData));
   }]
 })

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./public/app.dev.js",
-    "serve:app": "http-server -port 4400 dist/",
+    "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./dist/app.dev.js",
+    "serve:app": "http-server -p 4400 dist/",
     "serve:json": "json-server --watch dev/db.json --port 8080",
     "serve:php": "php -S localhost:8080 -t ./back-php back-php/api.php",
     "reset:database": "./back-php/create_database"
@@ -19,7 +19,6 @@
     "ejs": "^2.5.7",
     "kaop": "^2.7.10",
     "path-parser": "^2.0.2",
-    "rx": "^4.1.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

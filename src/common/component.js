@@ -11,7 +11,7 @@ module.exports = Component = Class.inherits(HTMLElement, {
   props: {},
   constructor: [function(props) {
     this.props = props || {};
-  }, "$setupListeners", "$registerDomListeners"],
+  }, "$setupListeners"],
   navigate: function(newUrl){
     newUrl = "#" + newUrl
     location.hash = newUrl;
@@ -24,6 +24,20 @@ module.exports = Component = Class.inherits(HTMLElement, {
   },
   isRenderAllowed: function(){
     return true;
+  },
+  on: function(evt, handler) {
+    var eventSplit = evt.split(" ");
+    if(["click", "change", "keydown"].indexOf(eventSplit[0]) === -1) {
+      return;
+    }
+    var targets = this.q(eventSplit[1], true);
+    for (var i = 0; i < targets.length; i++) {
+      targets[i].addEventListener(eventSplit[0], handler.bind(this));
+    }
+  },
+  off: function(evt, handler) {
+    var eventSplit = idEvent.split(" ");
+    this.q(eventSplit[1]).removeEventListener(eventSplit[0], handler);
   },
   root: function() {
     var tmpNode = document.createElement(this.selector);
@@ -40,7 +54,8 @@ module.exports = Component = Class.inherits(HTMLElement, {
       this.el = document.getElementById(this.uid);
     }
     this.replaceContent(compTemplate);
-  }],
+
+  }, "$registerDomListeners"],
   replaceContent: function(rawhtml) {
     if(this.css) {
       rawhtml += "<style>" + this.css + "</style>";

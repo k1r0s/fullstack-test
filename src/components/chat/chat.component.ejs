@@ -2,6 +2,8 @@
 this.props.getChatClass = function(message){
   return this.currentSession.id === message.fromId ? "from-session" : "from-selection";
 }
+
+this.props.sortMessages = function(messageA, messageB) { return messageA.timestamp - messageB.timestamp; }
 ?>
 
 <div class="chat-container">
@@ -11,7 +13,7 @@ this.props.getChatClass = function(message){
   <div class="profile-min selection-profile">
     <img src="<?= this.props.selectedProfile.profileImg ?>">
   </div>
-  <? this.props.messages.forEach(function(message){ ?>
+  <? this.props.messages.sort(this.props.sortMessages).forEach(function(message){ ?>
     <div class="message-item <?= this.props.getChatClass(message) ?>">
 
       <span></span>

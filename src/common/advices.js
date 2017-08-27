@@ -1,21 +1,11 @@
 var Advices = require("kaop/Advices");
-var rx = require("rx");
 var EventEmitter = require("./event-emitter");
 
 Advices.locals.$EJS = require("ejs");
 Advices.locals.$EJS.delimiter = "?";
 Advices.locals.$axiosInstance = require("../services/request");
+Advices.locals.$session = require("../services/sessionService");
 Advices.locals.$EE = new EventEmitter();
-
-var domClickSource = rx.Observable.fromEvent(document, "click");
-var domKeydownSource = rx.Observable.fromEvent(document, "keydown");
-var domChangeSource = rx.Observable.fromEvent(document, "change");
-
-Advices.locals.$domSource = rx.Observable.merge(
-  domClickSource,
-  domKeydownSource,
-  domChangeSource
-);
 
 Advices.add(
   function $emit(evid) {
@@ -40,6 +30,12 @@ Advices.add(
       meta.args.push(result.data);
       next();
     })
+  },
+  function $sessionCreate(resource) {
+    meta.args.push($session.create(resource, meta.args[0]));
+  },
+  function $sessionRead(resource) {
+    meta.args.push($session.read(resource, meta.args[0]));
   },
   function $PUT(resource) {
     $axiosInstance.put(resource + "/" + meta.args[0].id, meta.args[0]).then(function(result){
@@ -66,24 +62,10 @@ Advices.add(
     meta.args.unshift(meta.scope.q(selector).value);
   },
   function $registerDomListeners() {
-    var methods = Object.keys(meta.scope).filter(function(prop) { return typeof meta.scope[prop] === "function" })
-    methods.filter(function(prop) { return prop.search("click ") > -1 })
-    .forEach(function(eventHandler) {
-      $domSource
-      .filter(function(e){ return e.type === "click" })
-      .filter(function(e) {
-        var selector = eventHandler.split(" ")[1];
-        return meta.scope.q(selector) && meta.scope.q(selector).outerHTML === e.target.outerHTML;
-      })
-      .subscribe(meta.scope[eventHandler])
-    })
-    // methods.filter(function(prop) { return prop.search("change ") > -1 })
-    // .forEach(function(eventHandler) {
-    //
-    // })
-    // methods.filter(function(prop) { return prop.search("keydown ") > -1 })
-    // .forEach(function(eventHandler) {
-    //
-    // })
+    for (var prop in meta.scope) {
+      if (meta.scope.hasOwnProperty(prop) && typeof meta.scope[prop] === "function") {
+        meta.scope.on(prop, meta.scope[prop]);
+      }
+    }
   }
 )

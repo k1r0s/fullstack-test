@@ -19,6 +19,9 @@ module.exports = Profile = Class.inherits(Component, {
     this.selectProfile();
   },
   "click .profile-image>img": function(){
+    if(this.props.routeName === "Me") {
+      return;
+    }
     this.navigate("/chat/" + this.props.routeName);
   },
   "click .add-friend": function(){

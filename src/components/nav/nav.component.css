@@ -25,6 +25,7 @@ x-nav .menu a.a-left:after {
 x-nav .menu * {
   color: white;
   font-weight: bold;
+  font-size: 25px;
 }
 
 x-nav .menu span {
