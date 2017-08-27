@@ -8,7 +8,8 @@
     "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./public/app.dev.js",
     "serve:app": "http-server -port 4400 dist/",
     "serve:json": "json-server --watch dev/db.json --port 8080",
-    "serve:php": "php -S localhost:8080 -t ./back-php back-php/api.php"
+    "serve:php": "php -S localhost:8080 -t ./back-php back-php/api.php",
+    "reset:database": "./back-php/create_database"
   },
   "keywords": [],
   "author": "",

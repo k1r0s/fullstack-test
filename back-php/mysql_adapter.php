@@ -26,13 +26,17 @@ class MySQLAdapter {
 
   public function getRows() {
     $data = array();
-    while ($rows = mysql_fetch_assoc($this->_result)) {
-        $data[] = $rows;
+    while ($row = $this->getRow()) {
+        $data[] = $row;
     }
     return $data;
   }
 
+  public function getRow() {
+    return mysql_fetch_assoc($this->_result);
+  }
+
   public function close() {
-    mysql_close($this->_link);
+    mysql_close();
   }
 }
