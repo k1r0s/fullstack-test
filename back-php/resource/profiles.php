@@ -8,7 +8,7 @@ function readResource($database, $resourceId, $data) {
   $sql = "SELECT * FROM `profiles`";
   $database->query($sql);
   $result = $database->getRows();
-  return json_encode($result);
+  return json_encode($result, JSON_NUMERIC_CHECK);
 }
 
 function updateResource($database, $resourceId, $data) {

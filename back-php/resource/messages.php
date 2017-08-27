@@ -18,7 +18,7 @@ function createResource($database, $resourceId, $data) {
   $database->query($sql);
   $database->query($sql_last_creation); // ?? would be better perform a BEGIN;, COMMIT;
   $result = $database->getRow();
-  return json_encode($result);
+  return json_encode($result, JSON_NUMERIC_CHECK);
 }
 
 function readResource($database, $resourceId, $query) {
@@ -32,7 +32,7 @@ function readResource($database, $resourceId, $query) {
   $sql = "SELECT * FROM `messages` WHERE fromId = ".$fromId." AND toId = ".$toId;
   $database->query($sql);
   $result = $database->getRows();
-  return json_encode($result);
+  return json_encode($result, JSON_NUMERIC_CHECK);
 }
 
 function updateResource($database, $resourceId, $data) {
