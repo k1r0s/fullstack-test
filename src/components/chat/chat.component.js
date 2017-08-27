@@ -33,7 +33,7 @@ module.exports = Chat = Class.inherits(Profile, {
     setTimeout(function(){
       this.addMessageHandler({
         "fromId": this.props.selectedProfile.id,
-        "toId": 3,
+        "toId": this.props.currentSession.id,
         "content": "Hi, how are you! Wana some turing test?",
         "timestamp": Date.now()
       });

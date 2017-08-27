@@ -26,7 +26,7 @@ module.exports = Profile = Class.inherits(Component, {
   },
   "click .add-friend": function(){
     // number to boolean flip
-    this.props.selectedProfile.friend = !(!!this.props.selectedProfile.friend);
+    this.props.selectedProfile.friend = this.props.selectedProfile.friend ? 0 : 1;
     this.addFriendHandler(this.props.selectedProfile);
   },
   addFriendHandler: ["$PUT: 'profiles'", function(request, responseData){

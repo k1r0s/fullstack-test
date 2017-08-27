@@ -1,6 +1,8 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 header("Content-type: application/json");
 
 $resourceList = array("session", "messages", "profiles");
@@ -39,9 +41,13 @@ if ($method == "POST") {
 } elseif ($method == "DELETE") {
   $response = deleteResource($database, $resourceId, $_GET);
   http_response_code(200);
+} elseif ($method == "OPTIONS") {
+  http_response_code(200);
+  exit();
 } else {
   http_response_code(405);
   exit();
 }
+
 $database->close();
 echo $response;

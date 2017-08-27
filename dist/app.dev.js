@@ -4174,7 +4174,7 @@ module.exports = Chat = Class.inherits(Profile, {
     setTimeout(function(){
       this.addMessageHandler({
         "fromId": this.props.selectedProfile.id,
-        "toId": 3,
+        "toId": this.props.currentSession.id,
         "content": "Hi, how are you! Wana some turing test?",
         "timestamp": Date.now()
       });
@@ -4298,7 +4298,8 @@ module.exports = Profile = Class.inherits(Component, {
     this.navigate("/chat/" + this.props.routeName);
   },
   "click .add-friend": function(){
-    this.props.selectedProfile.friend = !this.props.selectedProfile.friend;
+    // number to boolean flip
+    this.props.selectedProfile.friend = this.props.selectedProfile.friend ? 0 : 1;
     this.addFriendHandler(this.props.selectedProfile);
   },
   addFriendHandler: ["$PUT: 'profiles'", function(request, responseData){
@@ -4337,6 +4338,8 @@ document.body.querySelector("#app").innerHTML = app.root();
 
 },{"./common/advices":46,"./components/app-router/app-router.component":50,"./components/app/app.component":52,"./components/chat/chat.component":55,"./components/home/home.component":58,"./components/nav/nav.component":61,"./components/profile/profile.component":64,"./services/storage":68}],66:[function(require,module,exports){
 var axios = require("axios");
+
+axios.defaults.headers.common["Accept"] = "application/json";
 
 module.exports = instance = axios.create({
   baseURL: 'http://localhost:8080/',
