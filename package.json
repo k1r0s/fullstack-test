@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "browserify -t [ stringify --extensions [.ejs .css] ] ./src/init.js -o ./public/app.dev.js",
-    "serve:dev": "json-server --watch dev/db.json --port 8080"
+    "serve:app": "http-server -port 4400 dist/",
+    "serve:json": "json-server --watch dev/db.json --port 8080",
+    "serve:php": "php -S localhost:8080 back-php/src/api.php"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
   },
   "devDependencies": {
     "browserify": "^14.4.0",
+    "http-server": "^0.10.0",
     "json-server": "^0.12.0",
     "stringify": "^5.1.0"
   }
