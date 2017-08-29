@@ -34,7 +34,7 @@ browsers (Safari, Chrome, Firefox, Opera).
   - Where to find your code
   - What would you have done differently if you had had more time
   - Etc.
-- Please send your results as a [git bundle](https://git-scm.com/docs/git-bundle).
+- Please send your results as a [git patch](https://git-scm.com/docs/git-format-patch) ([instructions](https://www.devroom.io/2009/10/26/how-to-create-and-apply-a-patch-with-git/)).
 
 
 # Profile Page
