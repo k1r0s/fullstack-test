@@ -30,6 +30,7 @@ You should look `package.json`
 "reset:database": "./back-php/create_database",
 "mysql:login": "mysql -u root -papasswordveryhardtowrite"
 ```
+- `npm test` run all tests, there are only 3 tests as a showcase
 - `npm run build:dev` merge all javascript modules in a bundle, outputs/replace current bundle (needed to dev)
 - `npm run serve:app` deploy a minimal static server on dist folder
 - `npm run serve:json` run a minimal server with fake API having db.json data
@@ -38,6 +39,16 @@ You should look `package.json`
 - `mysql:login` sortcut cmd to fast login into mysql-cli, depending on which password you have ...
 
 > To run de app you may run serve:json or serve:php, and serve:app
+
+### Running tests
+
+Before running the tests you need to deploy the app.
+
+So you have to do like this:
+
+- `npm run serve:php` or `npm run serve:json` 
+- `npm run serve:app`
+- `npm test`
 
 ### Show me the code!
 
@@ -49,6 +60,7 @@ You should look `package.json`
 ├── node_modules            Nodejs dependencies
 ├── package.json            NPM config file
 ├── src                     Where js lives (front)
+├── test                    e2e tests
 └── SUMMARY.md              ...
 ```
 
@@ -58,7 +70,7 @@ Brief:
 
 IMO too few criteria and screen behavior description, for example I made a "home" screen which is not required because it makes sense to navigate through profiles.
 
-Also, since no info is provided about how to retrieve a "session" I hardcoded on the backend but "messages" resource is a bit messy since you have to perform two calls to retrieve whole message collection for one conversation. This was not by design but I realize too late about that. Well, the project has some falls in design since I focused a lot on technical aspects, like build a whole js framework (lol), rather than how app behaves in terms of domain/business.
+Also, since no info is provided about how to retrieve a "session" I hardcoded on the backend but "messages" resource is a bit messy since you have to perform two calls to retrieve whole message collection for one conversation. This was not by design but I realize too late about that. Well, the project has some falls in design since I focused a lot on technical aspects, **like almost build a whole component library**, rather than how app behaves in terms of domain/business.
 
 (I think the decision about ban known frameworks was great).
 
@@ -71,7 +83,7 @@ If this was a real project:
 - endpoints have a relationship with current session (/messages?fromId=xx to retrieve whole conversation)
 - finish all the API endpoints, now only used enpoints do work (IE you cannot post a profile)
 - use virtualdom instead of ejs
-- bundle minification / bundle splitting
+- javascript bundle minification / bundle splitting
 - use a css framework
 - use a real frontend framework
 - styles are not good as I wish
